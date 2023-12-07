@@ -31,7 +31,7 @@ main {
     cursor: pointer;
   }
   &:active {
-    background-color: $light-blue-color;
+    background-color: $dark-green-color;
   }
 }
 
@@ -92,6 +92,18 @@ main {
     pointer-events: none;
     background-color: $halfdark-grey-color;
     box-shadow: none;
+  }
+
+  &-link {
+    @include font-styles($fs: 14px);
+    color: $green-color;
+    position: absolute;
+    bottom: 35px;
+    left: 28px;
+  
+    &:hover {
+      border-bottom: 1px solid $green-color;
+    }
   }
 }
 
