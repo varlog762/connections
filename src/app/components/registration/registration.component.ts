@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { passwordValidator } from '../../validators/password.validator';
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +22,7 @@ export class RegistrationComponent implements OnInit{
     this.registrationForm$ = this.fb.group({
       username: ['', [Validators.required, ]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', Validators.required, passwordValidator],
     })
   }
 
