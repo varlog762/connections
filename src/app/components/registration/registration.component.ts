@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 
 import { passwordValidator } from '../../validators/password.validator';
 import { usernameValidator } from '../../validators/userName.validator';
+import { RegistrationRequestBodyIntrface } from '../../models/registration-request-body.interface';
 
 @Component({
   selector: 'app-registration',
@@ -31,8 +32,8 @@ export class RegistrationComponent implements OnInit {
 
   initializeForm() {
     this.registrationForm = this.fb.group({
-      username: ['', [Validators.required, usernameValidator]],
       email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, usernameValidator]],
       password: ['', [Validators.required, passwordValidator]],
     });
   }
