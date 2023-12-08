@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import {
   registrationAction,
   registrationErrorAction,
   registrationSuccessAction
 } from '../actions/auth.actions';
-import { RegistrationRequestIntrface } from '../../models/registration-request.interface';
 import { AuthService } from '../../services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class RegistrationEffects {
