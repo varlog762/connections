@@ -9,6 +9,9 @@ export const registrationAction = createAction(
 
 export const registrationSuccessAction = createAction(
   '[Registration Effect] Registration Success',
+  props<{ payload: {
+    isSubmitInProgress: boolean;
+  } }>
 );
 
 export const registrationErrorAction = createAction(

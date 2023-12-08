@@ -1,4 +1,4 @@
 export interface RegistrationStateInterface {
-  isSubmiting: boolean;
+  isSubmitInProgress: boolean;
   isPrimaryDuplicationException: boolean;
 }
