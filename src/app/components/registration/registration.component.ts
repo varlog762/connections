@@ -6,11 +6,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { passwordValidator } from '../../validators/password.validator';
 import { usernameValidator } from '../../validators/userName.validator';
 import { RegistrationRequestIntrface } from '../../models/registration-request.interface';
 import { AuthService } from '../../services/auth.service';
+import { registrationAction } from '../../redux/actions/auth.actions';
+
 
 @Component({
   selector: 'app-registration',
@@ -25,7 +28,7 @@ import { AuthService } from '../../services/auth.service';
 export class RegistrationComponent implements OnInit {
   public registrationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private store: Store, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -40,6 +43,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.registration(this.registrationForm.value).subscribe((response) => console.log(response));
+    console.log(1, this.registrationForm.value);
+    this.store.dispatch(registrationAction(this.registrationForm.value));
+    // this.registrationForm.reset;
+    // this.authService.registration(this.registrationForm.value).subscribe();
   }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { EMPTY, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 
 import { RegistrationRequestIntrface } from '../models/registration-request.interface';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -10,17 +11,17 @@ import { RegistrationRequestIntrface } from '../models/registration-request.inte
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   registration(data: RegistrationRequestIntrface): Observable<object> {
     return this.http.post('/registration', data).pipe(
-      map((response: object) => response),
+      tap(() => {
+        this.router.navigate(['/signin']);
+      }),
       catchError((error: HttpErrorResponse) => {
-        // Обработка ошибки
         console.log('Error during registration:', error);
 
-        // Возвращаем новый Observable с пустым объектом, чтобы не обрушивать поток
-        return throwError({});
+        return of(EMPTY);
       })      
     );
   }

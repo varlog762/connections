@@ -4,16 +4,16 @@ import { RegistrationRequestIntrface } from '../../models/registration-request.i
 
 export const registrationAction = createAction(
   '[Registration Component] Registration',
-  props<RegistrationRequestIntrface>,
+  props<RegistrationRequestIntrface>(),
 );
 
 export const registrationSuccessAction = createAction(
   '[Registration Effect] Registration Success',
-  props<{ payload: {
-    isSubmitInProgress: boolean;
-  } }>
+  // props<{ isSubmitInProgress: boolean }>(),
+  props<{ payload: object }>(),
 );
 
 export const registrationErrorAction = createAction(
   '[Registration Effect] Registration Error',
+  props<{ errorType: string; errorMessage: string }>(),
 );
