@@ -1,11 +1,11 @@
-import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function usernameValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const value = control.value;
+  return (control: AbstractControl): ValidationErrors | null => {
+    const { value } = control;
 
     if (!/^[a-zA-Z\s]*$/.test(value)) {
-      return { 'usernameValidator': true };
+      return { usernameValidator: true };
     }
 
     return null;

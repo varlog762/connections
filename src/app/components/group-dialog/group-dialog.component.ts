@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './group-dialog.component.html',
-  styleUrl: './group-dialog.component.scss'
+  styleUrl: './group-dialog.component.scss',
 })
 export class GroupDialogComponent {
 

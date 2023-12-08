@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './people.component.html',
-  styleUrl: './people.component.scss'
+  styleUrl: './people.component.scss',
 })
 export class PeopleComponent {
 

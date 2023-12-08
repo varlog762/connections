@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 import { passwordValidator } from '../../validators/password.validator';
+import { usernameValidator } from '../../validators/userName.validator';
 
 @Component({
   selector: 'app-registration',
@@ -11,19 +18,26 @@ import { passwordValidator } from '../../validators/password.validator';
     ReactiveFormsModule,
   ],
   templateUrl: './registration.component.html',
-  styleUrl: './registration.component.scss'
+  styleUrl: './registration.component.scss',
 })
-export class RegistrationComponent implements OnInit{
-  public registrationForm$!: FormGroup;
+export class RegistrationComponent implements OnInit {
+  public registrationForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.registrationForm$ = this.fb.group({
-      username: ['', [Validators.required, ]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, passwordValidator],
-    })
+    this.initializeForm();
   }
 
+  initializeForm() {
+    this.registrationForm = this.fb.group({
+      username: ['', [Validators.required, usernameValidator]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, passwordValidator]],
+    });
+  }
+
+  onSubmit(): void {
+
+  }
 }
