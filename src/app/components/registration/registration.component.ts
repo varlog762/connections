@@ -9,7 +9,8 @@ import { RouterModule } from '@angular/router';
 
 import { passwordValidator } from '../../validators/password.validator';
 import { usernameValidator } from '../../validators/userName.validator';
-import { RegistrationRequestBodyIntrface } from '../../models/registration-request-body.interface';
+import { RegistrationRequestIntrface } from '../../models/registration-request.interface';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +25,7 @@ import { RegistrationRequestBodyIntrface } from '../../models/registration-reque
 export class RegistrationComponent implements OnInit {
   public registrationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -39,6 +40,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
-
+    this.authService.registration(this.registrationForm.value).subscribe((response) => console.log(response));
   }
 }
