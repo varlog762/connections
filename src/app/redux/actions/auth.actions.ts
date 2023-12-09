@@ -7,6 +7,10 @@ export const registrationAction = createAction(
   props<RegistrationRequestIntrface>(),
 );
 
+export const submitBtnDisableAction = createAction(
+  '[Registration Component | login Component] Disable Submit Button',
+);
+
 export const registrationSuccessAction = createAction(
   '[Registration Effect] Registration Success',
   // props<{ isSubmitInProgress: boolean }>(),

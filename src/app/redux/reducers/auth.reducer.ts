@@ -1,24 +1,39 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { registrationErrorAction, registrationSuccessAction } from '../actions/auth.actions';
-import { RegistrationStateInterface } from '../../models/registration-state.interface';
+import { registrationErrorAction, registrationSuccessAction, submitBtnDisableAction } from '../actions/auth.actions';
+import { AuthStateInterface } from '../../models/auth-state.interface';
 
-export const initialSate: RegistrationStateInterface = {
+export const initialSate: AuthStateInterface = {
   isSubmitInProgress: false,
   isPrimaryDuplicationException: false,
+  currentUser: null,
+  isLogged: null,
+  errors: null,
 };
 
 export const registrationReducer = createReducer(
   initialSate,
-  on(registrationSuccessAction, (state, payload) => {
-    console.log(payload);
+  on(submitBtnDisableAction, (state) => {
+    return {
+      ...state,
+      isSubmitInProgress: true,
+    };
+  }),
+  on(registrationSuccessAction, (state) => {
 
-    return {...state};
-    // payload,
+    return {
+      ...state,
+      // isSubmitInProgress: false,
+      errors: null,
+    };
   }),
   on(registrationErrorAction, (state, { errorType, errorMessage }) => {
     console.log(`Error Type: ${errorType}, Error Message: ${errorMessage}`);
 
-    return {...state};
+    return {
+      ...state,
+      // isSubmitInProgress: false,
+      errors: { type: errorType, message: errorMessage },
+    };
   }),
 );

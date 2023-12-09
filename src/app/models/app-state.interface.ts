@@ -1,5 +1,5 @@
-import { RegistrationStateInterface } from "./registration-state.interface";
+import { AuthStateInterface } from "./auth-state.interface";
 
 export interface AppStateInterface {
-  registration: RegistrationStateInterface;
+  auth: AuthStateInterface;
 }
