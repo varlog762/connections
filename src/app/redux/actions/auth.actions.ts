@@ -11,13 +11,20 @@ export const submitBtnDisableAction = createAction(
   '[Registration Component | login Component] Disable Submit Button',
 );
 
+export const regRedirectAndShowMessageAction = createAction(
+  '[Registration Effect] Redirect To Sign In & Show Message',
+);
+
 export const registrationSuccessAction = createAction(
   '[Registration Effect] Registration Success',
-  // props<{ isSubmitInProgress: boolean }>(),
   props<{ payload: object }>(),
 );
 
 export const registrationErrorAction = createAction(
   '[Registration Effect] Registration Error',
-  props<{ errorType: string; errorMessage: string }>(),
+  props<{ errorType: string; errorMessage: string; email: string | null }>(),
+);
+
+export const regRedirectionSuccessAction = createAction(
+  '[registrationSuccessEffects] Do Nothing...',
 );

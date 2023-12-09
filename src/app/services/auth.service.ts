@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EMPTY, Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { RegistrationRequestIntrface } from '../models/registration-request.interface';
-import { Router } from '@angular/router';
+import { ToastService } from './toast.service';
 
 
 @Injectable({
@@ -11,18 +12,15 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private toastService: ToastService) { }
 
   registration(data: RegistrationRequestIntrface): Observable<object> {
     return this.http.post('/registration', data).pipe(
-      tap(() => {
-        this.router.navigate(['/signin']);
-      }),
-      catchError((error: HttpErrorResponse) => {
-        console.log('Error during registration:', error);
+      // catchError((error: HttpErrorResponse) => {
+      //   console.log('Error during registration:', error);
 
-        return of(EMPTY);
-      })      
+      //   return of(EMPTY);
+      // })      
     );
   }
 }

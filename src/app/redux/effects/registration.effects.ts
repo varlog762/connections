@@ -3,14 +3,15 @@ import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 import {
+  regRedirectAndShowMessageAction,
   registrationAction,
   registrationErrorAction,
   registrationSuccessAction
 } from '../actions/auth.actions';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Injectable()
 export class RegistrationEffects {
@@ -20,17 +21,30 @@ export class RegistrationEffects {
       switchMap((formValue) =>
         this.authService.registration(formValue).pipe(
           mergeMap((res) => {
-            console.log(res);
-            return [registrationSuccessAction({ payload: res })]}),
+            
+            return [
+              registrationSuccessAction({ payload: res }),
+              regRedirectAndShowMessageAction(),
+            ]}),
           catchError((err: HttpErrorResponse) => {
             const errorType = err.error && err.error.type ? err.error.type : 'UnknownError';
             const errorMessage = err.error && err.error.message ? err.error.message : 'Unknown error occurred';
-            return of(registrationErrorAction({ errorType, errorMessage }));
+
+            this.toastService.showError(errorMessage);
+
+            console.log(formValue);
+
+            if (errorType === 'PrimaryDuplicationException') {
+              return of(registrationErrorAction({ errorType, errorMessage, email: formValue.email }));
+            }
+
+            return of(registrationErrorAction({ errorType, errorMessage, email: null}));
           })
         )
       )
     )
   );
 
-  constructor(private actions$: Actions, private authService: AuthService, private router: Router) {}
+  constructor(
+    private actions$: Actions, private authService: AuthService, private toastService: ToastService) {}
 }

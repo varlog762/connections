@@ -8,3 +8,8 @@ export const isSubmitInProgressSelector = createSelector(
   selectAuthFeature,
   (state) => state.isSubmitInProgress
 )
+
+export const duplicatedEmailsSelector = createSelector(
+  selectAuthFeature,
+  (state) => state.duplicatedEmails
+)
