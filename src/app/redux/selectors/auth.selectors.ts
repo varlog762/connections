@@ -21,3 +21,8 @@ export const errorAndDuplicatedEmailsSelector = createSelector(
     duplicatedEmails: state.duplicatedEmails,
   })
 )
+
+export const isLoggedSelector = createSelector(
+  selectAuthFeature,
+  (state) => state.isLogged
+)

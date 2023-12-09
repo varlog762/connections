@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { RegistrationRequestIntrface } from '../../models/registration-request.interface';
-import { LoginResponseInterface } from '../../models/login-response.interface';
+import { SuccessUserLoginPayloadInterface } from '../../models/success-login-payload.interface';
 
 export const registrationAction = createAction(
   '[Registration Component] Registration In Progress...',
@@ -37,7 +37,7 @@ export const loginAction = createAction(
 
 export const loginSuccessAction = createAction(
   '[Login Component] Login Success',
-  props<{ payload: LoginResponseInterface }>(),
+  props<{ payload: SuccessUserLoginPayloadInterface }>(),
 );
 
 export const loginErrorAction = createAction(
