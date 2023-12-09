@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { BackendErrors } from '../../enums/backend-errors.enum';
 import {
   regRedirectAndShowMessageAction,
   registrationAction,
@@ -27,14 +28,14 @@ export class RegistrationEffects {
               regRedirectAndShowMessageAction(),
             ]}),
           catchError((err: HttpErrorResponse) => {
-            const errorType = err.error && err.error.type ? err.error.type : 'UnknownError';
-            const errorMessage = err.error && err.error.message ? err.error.message : 'Unknown error occurred';
+            const errorType = err.error && err.error.type ? err.error.type : BackendErrors.UNKNOWN_ERROR;
+            const errorMessage = err.error && err.error.message ? err.error.message : BackendErrors.UNKNOWN_ERROR;
 
             this.toastService.showError(errorMessage);
 
             console.log(formValue);
 
-            if (errorType === 'PrimaryDuplicationException') {
+            if (errorType === BackendErrors.DUPLICATED_EMAILS) {
               return of(registrationErrorAction({ errorType, errorMessage, email: formValue.email }));
             }
 

@@ -13,7 +13,7 @@ export class registrationSuccessEffects {
       ofType(regRedirectAndShowMessageAction),
       mergeMap(() => {
         this.router.navigate(['/signin']);
-        this.toastService.showSuccess('Logout successful');
+        this.toastService.showSuccess('Registration successful');
 
         return [regRedirectionSuccessAction()];
       })

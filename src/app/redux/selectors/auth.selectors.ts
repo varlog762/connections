@@ -13,3 +13,11 @@ export const duplicatedEmailsSelector = createSelector(
   selectAuthFeature,
   (state) => state.duplicatedEmails
 )
+
+export const errorAndDuplicatedEmailsSelector = createSelector(
+  selectAuthFeature,
+  (state) => ({
+    errorType: state.errors?.type,
+    duplicatedEmails: state.duplicatedEmails,
+  })
+)

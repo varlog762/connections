@@ -1,20 +1,21 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { debounceTime, switchMap, take } from 'rxjs/operators';
 import { duplicatedEmailsSelector } from '../redux/selectors/auth.selectors';
-import { take } from 'rxjs/operators';
 
 export function emailDuplicationValidator(store: Store): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
     const email: string = control.value;
 
-    let duplicatedEmails: (string | null)[] = [];
+    return store.select(duplicatedEmailsSelector).pipe(
+      take(1),
+      switchMap((duplicatedEmails) => {
+        const isDuplicated = duplicatedEmails.includes(email);
 
-    store.select(duplicatedEmailsSelector).pipe(take(1)).subscribe((emails) => {
-      duplicatedEmails = emails || [];
-    });
-
-    const isDuplicated = duplicatedEmails.includes(email);
-
-    return isDuplicated ? { emailDuplicated: true } : null;
+        return of(isDuplicated ? { emailDuplicated: true } : null);
+      }),
+      debounceTime(300),
+    );
   };
 }
