@@ -33,8 +33,6 @@ export class RegistrationEffects {
 
             this.toastService.showError(errorMessage);
 
-            console.log(formValue);
-
             if (errorType === BackendErrors.DUPLICATED_EMAILS) {
               return of(registrationErrorAction({ errorType, errorMessage, email: formValue.email }));
             }

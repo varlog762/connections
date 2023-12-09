@@ -11,9 +11,9 @@ import { Store } from '@ngrx/store';
 
 import { BackendErrors } from '../../enums/backend-errors.enum';
 import { passwordValidator } from '../../validators/password.validator';
-import { usernameValidator } from '../../validators/userName.validator';
+import { nameValidator } from '../../validators/name.validator';
 import { registrationAction, submitBtnDisableAction } from '../../redux/actions/auth.actions';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { errorAndDuplicatedEmailsSelector, isSubmitInProgressSelector } from '../../redux/selectors/auth.selectors';
 import { emailDuplicationValidator } from '../../validators/duplicated-email.validator';
 import { CheckFieldService } from '../../services/check-field.service';
@@ -64,8 +64,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         updateOn: 'change',
       },
     ],
-      name: ['', [Validators.required, usernameValidator]],
-      password: ['', [Validators.required, passwordValidator]],
+      name: ['', [Validators.required, Validators.maxLength(40), nameValidator()]],
+      password: ['', [Validators.required, passwordValidator()]],
     });
   }
 
@@ -74,7 +74,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       const { errorType, duplicatedEmails } = data;
   
       const isEmailDuplicated = (errorType === BackendErrors.DUPLICATED_EMAILS
-        && duplicatedEmails.length
         && duplicatedEmails.includes(this.registrationForm.get('email')?.value));
   
       if (isEmailDuplicated) {

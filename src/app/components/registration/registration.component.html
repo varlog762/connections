@@ -17,13 +17,21 @@
         <div *ngIf="isFieldHasError(registrationForm, 'email', 'emailDuplicated')">Please enter another email.</div>
       </div>
 
-      <label for="username" class="registration-form-username-label form-label">Username</label>
+      <label for="name" class="registration-form-username-label form-label">Username</label>
       <input
         formControlName="name"
-        id="username"
-        name="username" 
+        id="name"
+        name="name" 
         type="text" 
-        class="registration-form-username form-input">
+        class="registration-form-username form-input"
+        [ngStyle]="{'border-color': isFieldInvalid(registrationForm, 'name') ? 'red' : ''}">
+
+        <div *ngIf="isFieldInvalid(registrationForm,'name')" class="invalid-feedback">
+          <div *ngIf="isFieldHasError(registrationForm, 'name', 'required')">Please enter a name.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'name', 'maxlength')">The name is too long.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'name', 'nameErr')">Only letters and spaces are allowed.</div>
+        </div>
+
       <label for="password" class="registration-form-password-label form-label">Password</label>
       <input formControlName="password" id="password" name="password" type="password" class="registration-form-password form-input">
       <a routerLink="/signin" class="form-link">Sign in</a>
