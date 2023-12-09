@@ -33,7 +33,22 @@
         </div>
 
       <label for="password" class="registration-form-password-label form-label">Password</label>
-      <input formControlName="password" id="password" name="password" type="password" class="registration-form-password form-input">
+      <input 
+        formControlName="password"
+        id="password" name="password"
+        type="password"
+        class="registration-form-password form-input"
+        [ngStyle]="{'border-color': isFieldInvalid(registrationForm, 'password') ? 'red' : ''}">
+
+        <div *ngIf="isFieldInvalid(registrationForm,'password')" class="invalid-feedback">
+          <div *ngIf="isFieldHasError(registrationForm, 'password', 'required')">Please enter a password.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'password', 'lengthErr')">Your password isn't strong enough: at least 8 characters.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'password', 'digitErr')">Your password isn't strong enough: a mixture of letters and numbers.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'password', 'lowercaseErr')">Your password isn't strong enough: a mixture of both uppercase and lowercase letters.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'password', 'uppercaseErr')">Your password isn't strong enough: a mixture of both uppercase and lowercase letters.</div>
+          <div *ngIf="isFieldHasError(registrationForm, 'password', 'specialCharacterErr')">Your password isn't strong enough: inclusion of at least one special character, e.g., ! # ? ].</div>
+        </div>
+
       <a routerLink="/signin" class="form-link">Sign in</a>
       <button 
         type="submit"
