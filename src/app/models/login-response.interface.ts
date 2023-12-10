@@ -1,4 +1,4 @@
 export interface LoginResponseInterface {
-  token: "string";
-  uid: "string";
+  token: 'string';
+  uid: 'string';
 }

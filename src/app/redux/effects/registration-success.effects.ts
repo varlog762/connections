@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { mergeMap} from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { regRedirectAndShowMessageAction, regRedirectionSuccessAction } from '../actions/auth.actions';
+import {
+  regRedirectAndShowMessageAction,
+  regRedirectionSuccessAction,
+} from '../actions/auth.actions';
 import { ToastService } from '../../services/toast.service';
 
 @Injectable()
@@ -21,5 +24,8 @@ export class registrationSuccessEffects {
   );
 
   constructor(
-    private actions$: Actions, private toastService: ToastService, private router: Router) {}
+    private actions$: Actions,
+    private toastService: ToastService,
+    private router: Router
+  ) {}
 }

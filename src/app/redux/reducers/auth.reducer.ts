@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { registrationErrorAction, registrationSuccessAction, submitBtnDisableAction } from '../actions/auth.actions';
+import {
+  authErrorAction,
+  registrationSuccessAction,
+  submitBtnDisableAction,
+} from '../actions/auth.actions';
 import { AuthStateInterface } from '../../models/auth-state.interface';
 
 export const initialSate: AuthStateInterface = {
@@ -13,14 +17,13 @@ export const initialSate: AuthStateInterface = {
 
 export const registrationReducer = createReducer(
   initialSate,
-  on(submitBtnDisableAction, (state) => {
+  on(submitBtnDisableAction, state => {
     return {
       ...state,
       isSubmitInProgress: true,
     };
   }),
-  on(registrationSuccessAction, (state) => {
-
+  on(registrationSuccessAction, state => {
     return {
       ...state,
       isSubmitInProgress: false,
@@ -28,8 +31,8 @@ export const registrationReducer = createReducer(
       errors: null,
     };
   }),
-  on(registrationErrorAction, (state, { errorType, errorMessage, email }) => {
-    if(email) {
+  on(authErrorAction, (state, { errorType, errorMessage, email }) => {
+    if (email) {
       return {
         ...state,
         isSubmitInProgress: false,
@@ -43,6 +46,5 @@ export const registrationReducer = createReducer(
       isSubmitInProgress: false,
       errors: { type: errorType, message: errorMessage },
     };
-  }),
-  
+  })
 );

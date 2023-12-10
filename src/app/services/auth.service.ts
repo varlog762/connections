@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { EMPTY, Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { RegistrationRequestIntrface } from '../models/registration-request.interface';
 import { ToastService } from './toast.service';
-
+import { LoginRequestInterface } from '../models/login-request.interface';
+import { LoginResponseInterface } from '../models/login-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private http: HttpClient, private router: Router, private toastService: ToastService) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   registration(data: RegistrationRequestIntrface): Observable<object> {
-    return this.http.post('/registration', data).pipe(
-      // catchError((error: HttpErrorResponse) => {
-      //   console.log('Error during registration:', error);
+    return this.http.post('/registration', data);
+  }
 
-      //   return of(EMPTY);
-      // })      
-    );
+  login(data: LoginRequestInterface): Observable<LoginResponseInterface> {
+    return this.http.post<LoginResponseInterface>('/signin', data);
   }
 }

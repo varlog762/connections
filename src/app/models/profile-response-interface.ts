@@ -1,14 +1,14 @@
 export interface ProfileResponceInterface {
   email: {
-    S: string
-  },
+    S: string;
+  };
   name: {
-    S: string
-  },
+    S: string;
+  };
   uid: {
-    S: string
-  },
+    S: string;
+  };
   createdAt: {
-    S: string // unix timestamp in milliseconds
-  }
+    S: string; // unix timestamp in milliseconds
+  };
 }

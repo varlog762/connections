@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './group-dialog.component.html',
   styleUrl: './group-dialog.component.scss',
 })
-export class GroupDialogComponent {
-
-}
+export class GroupDialogComponent {}

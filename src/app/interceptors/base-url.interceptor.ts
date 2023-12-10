@@ -11,7 +11,10 @@ import { Observable } from 'rxjs';
 export class BaseUrlInterceptor implements HttpInterceptor {
   private baseUrl = 'https://tasks.app.rs.school/angular';
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     const modifiedRequest = request.clone({
       url: this.baseUrl + request.url,
     });

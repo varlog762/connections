@@ -7,25 +7,27 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { BackendErrors } from '../../enums/backend-errors.enum';
 import { passwordValidator } from '../../validators/password.validator';
 import { nameValidator } from '../../validators/name.validator';
-import { registrationAction, submitBtnDisableAction } from '../../redux/actions/auth.actions';
-import { Observable, Subscription } from 'rxjs';
-import { errorAndDuplicatedEmailsSelector, isSubmitInProgressSelector } from '../../redux/selectors/auth.selectors';
+import {
+  registrationAction,
+  submitBtnDisableAction,
+} from '../../redux/actions/auth.actions';
+import {
+  selectErrorAndDuplicatedEmails,
+  selectIsSubmitInProgress,
+} from '../../redux/selectors/auth.selectors';
 import { emailDuplicationValidator } from '../../validators/duplicated-email.validator';
 import { CheckFieldService } from '../../services/check-field.service';
 
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
@@ -43,13 +45,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private checkFieldSrv: CheckFieldService,
-    ) {}
+    private checkFieldSrv: CheckFieldService
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
 
-    this.isSubmitInProgress$ = this.store.select(isSubmitInProgressSelector);
+    this.isSubmitInProgress$ = this.store.select(selectIsSubmitInProgress);
 
     this.subscribeErrors();
   }
@@ -57,33 +59,40 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   initializeForm(): void {
     this.registrationForm = this.fb.group({
       email: [
-        '', 
-      {
-        validators: [Validators.required, Validators.email],
-        asyncValidators: [emailDuplicationValidator(this.store)],
-        updateOn: 'change',
-      },
-    ],
-      name: ['', [Validators.required, Validators.maxLength(40), nameValidator()]],
+        '',
+        {
+          validators: [Validators.required, Validators.email],
+          asyncValidators: [emailDuplicationValidator(this.store)],
+          updateOn: 'change',
+        },
+      ],
+      name: [
+        '',
+        [Validators.required, Validators.maxLength(40), nameValidator()],
+      ],
       password: ['', [Validators.required, passwordValidator()]],
     });
   }
 
   subscribeErrors(): void {
-    this.duplicatedEmailsErrorSubscr$ = this.store.select(errorAndDuplicatedEmailsSelector).subscribe(data => {
-      const { errorType, duplicatedEmails } = data;
-  
-      const isEmailDuplicated = (errorType === BackendErrors.DUPLICATED_EMAILS
-        && duplicatedEmails.includes(this.registrationForm.get('email')?.value));
-  
-      if (isEmailDuplicated) {
-        this.registrationForm.get('email')?.setErrors({ emailDuplicated: true });
-      } else {
-        this.registrationForm.get('email')?.setErrors(null);
-      }
-    });
+    this.duplicatedEmailsErrorSubscr$ = this.store
+      .select(selectErrorAndDuplicatedEmails)
+      .subscribe(data => {
+        const { errorType, duplicatedEmails } = data;
+
+        const isEmailDuplicated =
+          errorType === BackendErrors.DUPLICATED_EMAILS &&
+          duplicatedEmails.includes(this.registrationForm.get('email')?.value);
+
+        if (isEmailDuplicated) {
+          this.registrationForm
+            .get('email')
+            ?.setErrors({ emailDuplicated: true });
+        } else {
+          this.registrationForm.get('email')?.setErrors(null);
+        }
+      });
   }
-  
 
   onSubmit(event: Event): void {
     event.preventDefault();

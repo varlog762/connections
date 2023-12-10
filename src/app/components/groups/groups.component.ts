@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
 })
-export class GroupsComponent {
-
-}
+export class GroupsComponent {}

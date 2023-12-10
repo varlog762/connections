@@ -3,7 +3,6 @@ import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { emailDuplicationValidator } from '../validators/duplicated-email.validator';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +20,11 @@ export class CheckFieldService {
     return true;
   }
 
-  isFieldHasError(formGroup: FormGroup, fieldName: string, error: string): boolean {
+  isFieldHasError(
+    formGroup: FormGroup,
+    fieldName: string,
+    error: string
+  ): boolean {
     if (formGroup && fieldName && error) {
       return !!formGroup.get(fieldName)?.errors?.[error];
     }

@@ -4,15 +4,21 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
   {
-    path: '', redirectTo: '/signin', pathMatch: 'full',
+    path: '',
+    redirectTo: '/signin',
+    pathMatch: 'full',
   },
   {
     path: 'signin',
-    loadComponent: () => import('./components/login/login.component').then((m) => m.LoginComponent),
+    loadComponent: () =>
+      import('./components/login/login.component').then(m => m.LoginComponent),
   },
   {
     path: 'signout',
-    loadComponent: () => import('./components/registration/registration.component').then((m) => m.RegistrationComponent),
+    loadComponent: () =>
+      import('./components/registration/registration.component').then(
+        m => m.RegistrationComponent
+      ),
   },
   // {
   //   path: '',
@@ -21,7 +27,10 @@ export const routes: Routes = [
   // },
   {
     path: 'profile',
-    loadComponent: () => import('./components/profile/profile.component').then((m) => m.ProfileComponent),
+    loadComponent: () =>
+      import('./components/profile/profile.component').then(
+        m => m.ProfileComponent
+      ),
     // canActivate: [authGuard],
   },
   {

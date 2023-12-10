@@ -2,27 +2,28 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { AuthStateInterface } from '../../models/auth-state.interface';
 
-export const selectAuthFeature = createFeatureSelector<AuthStateInterface>('auth');
+export const selectAuthFeature =
+  createFeatureSelector<AuthStateInterface>('auth');
 
-export const isSubmitInProgressSelector = createSelector(
+export const selectIsSubmitInProgress = createSelector(
   selectAuthFeature,
-  (state) => state.isSubmitInProgress
-)
+  state => state.isSubmitInProgress
+);
 
-export const duplicatedEmailsSelector = createSelector(
+export const selectDuplicatedEmails = createSelector(
   selectAuthFeature,
-  (state) => state.duplicatedEmails
-)
+  state => state.duplicatedEmails
+);
 
-export const errorAndDuplicatedEmailsSelector = createSelector(
+export const selectErrorAndDuplicatedEmails = createSelector(
   selectAuthFeature,
-  (state) => ({
+  state => ({
     errorType: state.errors?.type,
     duplicatedEmails: state.duplicatedEmails,
   })
-)
+);
 
-export const isLoggedSelector = createSelector(
+export const selectIsLogged = createSelector(
   selectAuthFeature,
-  (state) => state.isLogged
-)
+  state => state.isLogged
+);

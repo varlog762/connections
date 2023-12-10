@@ -9,8 +9,10 @@
 
 // @Injectable()
 // export class AuthInterceptor implements HttpInterceptor {
-//   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
+//   intercept(
+//     request: HttpRequest<unknown>,
+//     next: HttpHandler
+//   ): Observable<HttpEvent<unknown>> {
 //     const authRequest = request.clone({
 //       params: request.params.set('key', apiKey),
 //     });

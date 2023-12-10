@@ -5,7 +5,6 @@ export function nameValidator(): ValidatorFn {
     const name: string = control.value;
 
     if (!/^[a-zA-Z\s]*$/.test(name)) {
-
       return { nameErr: true };
     }
 
