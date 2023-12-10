@@ -10,7 +10,7 @@ import {
 import { ToastService } from '../../services/toast.service';
 
 @Injectable()
-export class registrationSuccessEffects {
+export class RegistrationSuccessEffects {
   reg$ = createEffect(() =>
     this.actions$.pipe(
       ofType(regRedirectAndShowMessageAction),

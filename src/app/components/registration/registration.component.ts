@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { BackendErrors } from '../../enums/backend-errors.enum';
+import { BackendErrorsEnum } from '../../enums/backend-errors.enum';
 import { passwordValidator } from '../../validators/password.validator';
 import { nameValidator } from '../../validators/name.validator';
 import {
@@ -18,7 +18,7 @@ import {
   submitBtnDisableAction,
 } from '../../redux/actions/auth.actions';
 import {
-  selectErrorAndDuplicatedEmails,
+  selectError,
   selectIsSubmitInProgress,
 } from '../../redux/selectors/auth.selectors';
 import { emailDuplicationValidator } from '../../validators/duplicated-email.validator';
@@ -40,7 +40,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   public isFieldHasError = this.checkFieldSrv.isFieldHasError;
 
-  public duplicatedEmailsErrorSubscr$!: Subscription;
+  public errorSubscription$!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -75,23 +75,21 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   subscribeErrors(): void {
-    this.duplicatedEmailsErrorSubscr$ = this.store
-      .select(selectErrorAndDuplicatedEmails)
-      .subscribe(data => {
-        const { errorType, duplicatedEmails } = data;
+    this.errorSubscription$ = this.store.select(selectError).subscribe(data => {
+      const { errorType, duplicatedEmails } = data;
 
-        const isEmailDuplicated =
-          errorType === BackendErrors.DUPLICATED_EMAILS &&
-          duplicatedEmails.includes(this.registrationForm.get('email')?.value);
+      const isEmailDuplicated =
+        errorType === BackendErrorsEnum.DUPLICATED_EMAILS &&
+        duplicatedEmails.includes(this.registrationForm.get('email')?.value);
 
-        if (isEmailDuplicated) {
-          this.registrationForm
-            .get('email')
-            ?.setErrors({ emailDuplicated: true });
-        } else {
-          this.registrationForm.get('email')?.setErrors(null);
-        }
-      });
+      if (isEmailDuplicated) {
+        this.registrationForm
+          .get('email')
+          ?.setErrors({ emailDuplicated: true });
+      } else {
+        this.registrationForm.get('email')?.setErrors(null);
+      }
+    });
   }
 
   onSubmit(event: Event): void {
@@ -100,11 +98,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     if (!this.registrationForm.invalid) {
       this.store.dispatch(registrationAction(this.registrationForm.value));
       this.store.dispatch(submitBtnDisableAction());
-      // this.registrationForm.reset();
     }
   }
 
   ngOnDestroy(): void {
-    this.duplicatedEmailsErrorSubscr$.unsubscribe();
+    this.errorSubscription$.unsubscribe();
   }
 }

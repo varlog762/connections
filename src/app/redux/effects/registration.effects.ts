@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { BackendErrors } from '../../enums/backend-errors.enum';
+import { BackendErrorsEnum } from '../../enums/backend-errors.enum';
 import {
   regRedirectAndShowMessageAction,
   registrationAction,
@@ -31,15 +31,15 @@ export class RegistrationEffects {
             const errorType =
               err.error && err.error.type
                 ? err.error.type
-                : BackendErrors.UNKNOWN_ERROR;
+                : BackendErrorsEnum.UNKNOWN_ERROR;
             const errorMessage =
               err.error && err.error.message
                 ? err.error.message
-                : BackendErrors.UNKNOWN_ERROR;
+                : BackendErrorsEnum.UNKNOWN_ERROR;
 
             this.toastService.showError(errorMessage);
 
-            if (errorType === BackendErrors.DUPLICATED_EMAILS) {
+            if (errorType === BackendErrorsEnum.DUPLICATED_EMAILS) {
               return of(
                 authErrorAction({
                   errorType,

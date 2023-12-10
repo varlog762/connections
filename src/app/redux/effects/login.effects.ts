@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HttpErrorResponse } from '@angular/common/http';
 
-import { BackendErrors } from '../../enums/backend-errors.enum';
+import { BackendErrorsEnum } from '../../enums/backend-errors.enum';
 import {
   loginAction,
   loginSuccessAction,
-  regRedirectAndShowMessageAction,
-  registrationAction,
   authErrorAction,
-  registrationSuccessAction,
 } from '../actions/auth.actions';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
@@ -26,31 +24,42 @@ export class LoginEffects {
       switchMap((formValue: LoginRequestInterface) =>
         this.authService.login(formValue).pipe(
           map((res: LoginResponseInterface) => {
-            return loginSuccessAction({
-              payload: {
+            if (res) {
+              const authData = {
                 token: res.token,
                 uid: res.uid,
                 email: formValue.email,
-              },
+              };
+
+              const authDataString = JSON.stringify(authData);
+
+              localStorage.setItem('currentUser', authDataString);
+
+              this.toastService.showSuccess('Login successful');
+              this.router.navigate(['/']);
+
+              return loginSuccessAction({ payload: authData });
+            }
+
+            return authErrorAction({
+              errorType: BackendErrorsEnum.UNKNOWN_ERROR,
+              errorMessage: BackendErrorsEnum.UNKNOWN_ERROR,
+              email: null,
             });
           }),
-          // return [
-          //   registrationSuccessAction({ payload: res }),
-          //   regRedirectAndShowMessageAction(),
-          // ]}),
           catchError((err: HttpErrorResponse) => {
             const errorType =
               err.error && err.error.type
                 ? err.error.type
-                : BackendErrors.UNKNOWN_ERROR;
+                : BackendErrorsEnum.UNKNOWN_ERROR;
             const errorMessage =
               err.error && err.error.message
                 ? err.error.message
-                : BackendErrors.UNKNOWN_ERROR;
+                : BackendErrorsEnum.UNKNOWN_ERROR;
 
             this.toastService.showError(errorMessage);
 
-            if (errorType === BackendErrors.DUPLICATED_EMAILS) {
+            if (errorType === BackendErrorsEnum.LOGIN_NOT_FOUND) {
               return of(
                 authErrorAction({
                   errorType,
@@ -72,6 +81,7 @@ export class LoginEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {}
 }

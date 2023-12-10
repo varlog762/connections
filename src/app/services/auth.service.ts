@@ -23,6 +23,6 @@ export class AuthService {
   }
 
   login(data: LoginRequestInterface): Observable<LoginResponseInterface> {
-    return this.http.post<LoginResponseInterface>('/signin', data);
+    return this.http.post<LoginResponseInterface>('/login', data);
   }
 }

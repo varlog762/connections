@@ -15,13 +15,18 @@ import { routes } from './app.routes';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
 import { registrationReducer } from './redux/reducers/auth.reducer';
 import { RegistrationEffects } from './redux/effects/registration.effects';
-import { registrationSuccessEffects } from './redux/effects/registration-success.effects';
+import { RegistrationSuccessEffects } from './redux/effects/registration-success.effects';
+import { LoginEffects } from './redux/effects/login.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(),
-    provideEffects(RegistrationEffects, registrationSuccessEffects),
+    provideEffects(
+      RegistrationEffects,
+      RegistrationSuccessEffects,
+      LoginEffects
+    ),
     provideHttpClient(withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,

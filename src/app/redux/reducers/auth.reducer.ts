@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import {
   authErrorAction,
+  loginSuccessAction,
   registrationSuccessAction,
   submitBtnDisableAction,
 } from '../actions/auth.actions';
@@ -27,7 +28,6 @@ export const registrationReducer = createReducer(
     return {
       ...state,
       isSubmitInProgress: false,
-      duplicatedEmail: null,
       errors: null,
     };
   }),
@@ -45,6 +45,19 @@ export const registrationReducer = createReducer(
       ...state,
       isSubmitInProgress: false,
       errors: { type: errorType, message: errorMessage },
+    };
+  }),
+  on(loginSuccessAction, (state, { payload }) => {
+    return {
+      ...state,
+      isSubmitInProgress: false,
+      isLogged: true,
+      errors: null,
+      currentUser: {
+        email: payload.email,
+        uid: payload.uid,
+        token: payload.token,
+      },
     };
   })
 );

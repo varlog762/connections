@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -7,15 +7,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, filter } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { CheckFieldService } from '../../services/check-field.service';
-import { selectIsSubmitInProgress } from '../../redux/selectors/auth.selectors';
+import {
+  selectError,
+  selectIsSubmitInProgress,
+} from '../../redux/selectors/auth.selectors';
 import {
   loginAction,
   submitBtnDisableAction,
 } from '../../redux/actions/auth.actions';
+import { BackendErrorsEnum } from '../../enums/backend-errors.enum';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +28,7 @@ import {
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loginForm!: FormGroup;
 
   public isSubmitInProgress$!: Observable<boolean>;
@@ -32,6 +36,10 @@ export class LoginComponent implements OnInit {
   public isFieldInvalid = this.checkFieldSrv.isFieldInvalid;
 
   public isFieldHasError = this.checkFieldSrv.isFieldHasError;
+
+  public errorSubscription$!: Subscription;
+
+  public loginFormSubscription$!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +52,7 @@ export class LoginComponent implements OnInit {
 
     this.isSubmitInProgress$ = this.store.select(selectIsSubmitInProgress);
 
-    // this.subscribeErrors();
+    this.subscribeErrors();
   }
 
   initializeForm(): void {
@@ -52,6 +60,23 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
+
+    this.loginFormSubscription$ = this.loginForm.valueChanges.subscribe(() => {
+      if (this.loginForm.hasError('notFound')) {
+        this.loginForm.setErrors(null);
+      }
+    });
+  }
+
+  subscribeErrors(): void {
+    this.errorSubscription$ = this.store
+      .select(selectError)
+      .pipe(
+        filter(error => error.errorType === BackendErrorsEnum.LOGIN_NOT_FOUND)
+      )
+      .subscribe(() => {
+        this.loginForm.setErrors({ notFound: true });
+      });
   }
 
   onSubmit(event: Event): void {
@@ -60,7 +85,11 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.invalid) {
       this.store.dispatch(loginAction(this.loginForm.value));
       this.store.dispatch(submitBtnDisableAction());
-      // this.registrationForm.reset();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.errorSubscription$.unsubscribe();
+    this.loginFormSubscription$.unsubscribe();
   }
 }
