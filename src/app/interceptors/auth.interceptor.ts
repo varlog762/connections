@@ -1,22 +1,32 @@
-// import { Injectable } from '@angular/core';
-// import {
-//   HttpRequest,
-//   HttpHandler,
-//   HttpEvent,
-//   HttpInterceptor,
-// } from '@angular/common/http';
-// import { Observable } from 'rxjs/internal/Observable';
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+} from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
 
-// @Injectable()
-// export class AuthInterceptor implements HttpInterceptor {
-//   intercept(
-//     request: HttpRequest<unknown>,
-//     next: HttpHandler
-//   ): Observable<HttpEvent<unknown>> {
-//     const authRequest = request.clone({
-//       params: request.params.set('key', apiKey),
-//     });
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    const currentUserString = localStorage.getItem('currentUser');
 
-//     return next.handle(authRequest);
-//   }
-// }
+    if (currentUserString) {
+      const currentUser = JSON.parse(currentUserString);
+
+      request = request.clone({
+        setHeaders: {
+          'rs-ui': currentUser['rs-ui'] || '',
+          'rs-email': currentUser['rs-email'] || '',
+          Authorization: currentUser['Authorization'] || '',
+        },
+      });
+    }
+
+    return next.handle(request);
+  }
+}
