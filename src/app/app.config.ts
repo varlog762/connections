@@ -13,10 +13,11 @@ import { routes } from './app.routes';
 
 // import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
-import { registrationReducer } from './redux/reducers/auth.reducer';
+import { authReducer } from './redux/reducers/auth.reducer';
 import { RegistrationEffects } from './redux/effects/registration.effects';
 import { RegistrationSuccessEffects } from './redux/effects/registration-success.effects';
 import { LoginEffects } from './redux/effects/login.effects';
+import { userProfileReducer } from './redux/reducers/userProfile.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,7 +34,10 @@ export const appConfig: ApplicationConfig = {
       useClass: BaseUrlInterceptor,
       multi: true,
     },
-    provideState({ name: 'auth', reducer: registrationReducer }),
+    provideStore({
+      authState: authReducer,
+      userProfileState: userProfileReducer,
+    }),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

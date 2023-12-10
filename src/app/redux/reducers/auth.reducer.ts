@@ -16,7 +16,7 @@ export const initialSate: AuthStateInterface = {
   errors: null,
 };
 
-export const registrationReducer = createReducer(
+export const authReducer = createReducer(
   initialSate,
   on(submitBtnDisableAction, state => {
     return {
