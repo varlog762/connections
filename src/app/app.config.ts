@@ -18,6 +18,8 @@ import { RegistrationEffects } from './redux/effects/registration.effects';
 import { RegistrationSuccessEffects } from './redux/effects/registration-success.effects';
 import { LoginEffects } from './redux/effects/login.effects';
 import { userProfileReducer } from './redux/reducers/userProfile.reducer';
+import { UserProfileEffects } from './redux/effects/user-profile.effects';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,12 +28,18 @@ export const appConfig: ApplicationConfig = {
     provideEffects(
       RegistrationEffects,
       RegistrationSuccessEffects,
-      LoginEffects
+      LoginEffects,
+      UserProfileEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
     provideStore({

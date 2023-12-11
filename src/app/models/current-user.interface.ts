@@ -1,5 +1,5 @@
 export interface CurrentUserInterface {
-  email: string;
-  uid: string;
-  token: string;
+  'rs-email': string;
+  'rs-uid': string;
+  Authorization: string;
 }

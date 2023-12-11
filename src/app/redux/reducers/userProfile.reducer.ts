@@ -1,24 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
 
-import {
-  authErrorAction,
-  loginSuccessAction,
-  registrationSuccessAction,
-  submitBtnDisableAction,
-} from '../actions/auth.actions';
 import { UserProfileStateInterface } from '../../models/user-profile-state.interface';
+import {
+  loadProfileSuccessAction,
+  profileErrorAction,
+} from '../actions/user-profile.actions';
 
 export const initialSate: UserProfileStateInterface = {
   isProfileLoaded: false,
   userProfile: null,
+  errors: null,
 };
 
 export const userProfileReducer = createReducer(
   initialSate,
-  on(submitBtnDisableAction, state => {
+  on(profileErrorAction, state => {
     return {
       ...state,
-      isSubmitInProgress: true,
+    };
+  }),
+  on(loadProfileSuccessAction, (state, payload) => {
+    return {
+      ...state,
+      // errors: { type: errorType, message: errorMessage },
     };
   })
 );

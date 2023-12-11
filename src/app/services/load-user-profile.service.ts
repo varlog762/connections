@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ProfileResponceInterface } from '../models/profile-response-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class LoadUserProfileService {
   constructor(private http: HttpClient) {}
 
-  loadProfile(): Observable<object> {
-    return this.http.get('/profile');
+  loadProfile(): Observable<ProfileResponceInterface> {
+    return this.http.get<ProfileResponceInterface>('/profile');
   }
 }

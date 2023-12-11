@@ -26,9 +26,9 @@ export class LoginEffects {
           map((res: LoginResponseInterface) => {
             if (res) {
               const authData = {
-                token: res.token,
-                uid: res.uid,
-                email: formValue.email,
+                Authorization: `Bearer ${res.token}`,
+                'rs-uid': res.uid,
+                'rs-email': formValue.email,
               };
 
               const authDataString = JSON.stringify(authData);

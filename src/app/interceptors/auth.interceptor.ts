@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
       request = request.clone({
         setHeaders: {
-          'rs-ui': currentUser['rs-ui'] || '',
+          'rs-uid': currentUser['rs-uid'] || '',
           'rs-email': currentUser['rs-email'] || '',
           Authorization: currentUser['Authorization'] || '',
         },

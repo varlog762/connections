@@ -54,9 +54,9 @@ export const authReducer = createReducer(
       isLogged: true,
       errors: null,
       currentUser: {
-        email: payload.email,
-        uid: payload.uid,
-        token: payload.token,
+        'rs-email': payload['rs-email'],
+        'rs-uid': payload['rs-uid'],
+        Authorization: payload.Authorization,
       },
     };
   })
