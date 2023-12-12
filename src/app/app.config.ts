@@ -21,6 +21,8 @@ import { UserProfileEffects } from './redux/effects/user-profile.effects';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UpdateUsernameEffects } from './redux/effects/update-username.effects';
 import { UpdateUsernameSuccessEffects } from './redux/effects/update-username-success.effects';
+import { LogoutEffects } from './redux/effects/logout.effects';
+import { LogoutSuccessEffects } from './redux/effects/logout-success.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +34,9 @@ export const appConfig: ApplicationConfig = {
       LoginEffects,
       UserProfileEffects,
       UpdateUsernameEffects,
-      UpdateUsernameSuccessEffects
+      UpdateUsernameSuccessEffects,
+      LogoutEffects,
+      LogoutSuccessEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {

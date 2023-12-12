@@ -19,4 +19,8 @@ export class AuthService {
   login(data: LoginRequestInterface): Observable<LoginResponseInterface> {
     return this.http.post<LoginResponseInterface>('/login', data);
   }
+
+  logout(): Observable<void> {
+    return this.http.delete<void>('/logout');
+  }
 }

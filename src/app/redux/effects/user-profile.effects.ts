@@ -46,7 +46,6 @@ export class UserProfileEffects {
               return loadProfileSuccessAction(userProfile);
             }),
             catchError((err: HttpErrorResponse) => {
-              console.log(err.type);
               const errorType =
                 err.error && err.error.type ? err.error.type : err.type;
               const errorMessage =

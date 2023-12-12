@@ -5,26 +5,22 @@ import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ToastService } from '../../services/toast.service';
+import { profileErrorAction } from '../actions/user-profile.actions';
 import {
-  nameSetFalseAction,
-  profileErrorAction,
-  updateUsernameAction,
-  updateUsernameShowMessageAction,
-} from '../actions/user-profile.actions';
-import { UpdateProfileService } from '../../services/update-profile-username.service';
+  doLogoutAction,
+  logoutShowMessageAndClearState,
+} from '../actions/auth.actions';
+import { AuthService } from '../../services/auth.service';
 
 @Injectable()
-export class UpdateUsernameEffects {
-  profile$ = createEffect(() =>
+export class LogoutEffects {
+  logout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(updateUsernameAction),
-      switchMap(({ payload }) =>
-        this.UpdateProfileService.updateName({ name: payload }).pipe(
+      ofType(doLogoutAction),
+      switchMap(() =>
+        this.authService.logout().pipe(
           mergeMap(() => {
-            return [
-              updateUsernameShowMessageAction({ name: payload }),
-              nameSetFalseAction(),
-            ];
+            return [logoutShowMessageAndClearState()];
           }),
           catchError((err: HttpErrorResponse) => {
             const errorType =
@@ -43,7 +39,7 @@ export class UpdateUsernameEffects {
 
   constructor(
     private actions$: Actions,
-    private UpdateProfileService: UpdateProfileService,
+    private authService: AuthService,
     private toastService: ToastService
   ) {}
 }

@@ -45,6 +45,6 @@ export const updateUsernameShowMessageAction = createAction(
   props<{ name: string }>()
 );
 
-export const userProfileStateClear = createAction(
+export const userProfileStateClearAction = createAction(
   '[Header | Profile] Clear User Profile State'
 );

@@ -49,13 +49,9 @@ export class LoginEffects {
           }),
           catchError((err: HttpErrorResponse) => {
             const errorType =
-              err.error && err.error.type
-                ? err.error.type
-                : BackendErrorsEnum.UNKNOWN_ERROR;
+              err.error && err.error.type ? err.error.type : err.type;
             const errorMessage =
-              err.error && err.error.message
-                ? err.error.message
-                : BackendErrorsEnum.UNKNOWN_ERROR;
+              err.error && err.error.message ? err.error.message : err.message;
 
             this.toastService.showError(errorMessage);
 

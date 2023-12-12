@@ -25,6 +25,10 @@ import {
   nameSetTrueAction,
   updateUsernameAction,
 } from '../../redux/actions/user-profile.actions';
+import {
+  doLogoutAction,
+  logoutBtnDisableAction,
+} from '../../redux/actions/auth.actions';
 
 @Component({
   selector: 'app-profile',
@@ -122,6 +126,11 @@ export class ProfileComponent implements OnInit {
 
     this.profileSubscription$.unsubscribe();
     this.subscribeProfileState();
+  }
+
+  logout() {
+    this.store.dispatch(doLogoutAction());
+    this.store.dispatch(logoutBtnDisableAction());
   }
 
   ngOnDestroy(): void {

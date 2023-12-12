@@ -6,9 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./components/default/default.component').then(
-        m => m.DefaultComponent
-      ),
+      import('./components/main/main.component').then(m => m.MainComponent),
     canActivate: [authGuard],
   },
   {
@@ -37,6 +35,6 @@ export const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent,
-    canActivate: [authGuard],
+    pathMatch: 'full',
   },
 ];

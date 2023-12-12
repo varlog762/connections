@@ -4,6 +4,7 @@ import {
   authErrorAction,
   authStateClearAction,
   loginSuccessAction,
+  logoutBtnDisableAction,
   registrationSuccessAction,
   submitBtnDisableAction,
 } from '../actions/auth.actions';
@@ -20,6 +21,12 @@ export const initialSate: AuthStateInterface = {
 export const authReducer = createReducer(
   initialSate,
   on(submitBtnDisableAction, state => {
+    return {
+      ...state,
+      isSubmitInProgress: true,
+    };
+  }),
+  on(logoutBtnDisableAction, state => {
     return {
       ...state,
       isSubmitInProgress: true,

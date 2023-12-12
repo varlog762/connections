@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
+
 import { loadUserProfileAction } from '../../redux/actions/user-profile.actions';
+import {
+  doLogoutAction,
+  logoutBtnDisableAction,
+} from '../../redux/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -16,5 +21,10 @@ export class HeaderComponent {
 
   goToUserProfile() {
     this.store.dispatch(loadUserProfileAction());
+  }
+
+  logout() {
+    this.store.dispatch(doLogoutAction());
+    this.store.dispatch(logoutBtnDisableAction());
   }
 }

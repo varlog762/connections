@@ -8,7 +8,7 @@ import {
   nameSetTrueAction,
   profileErrorAction,
   updateUsernameSuccessAction,
-  userProfileStateClear,
+  userProfileStateClearAction,
 } from '../actions/user-profile.actions';
 import { UserProfileInterface } from '../../models/user-profile.interface';
 
@@ -77,5 +77,5 @@ export const userProfileReducer = createReducer(
       isNameSet: false,
     };
   }),
-  on(userProfileStateClear, state => initialSate)
+  on(userProfileStateClearAction, state => initialSate)
 );

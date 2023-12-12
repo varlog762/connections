@@ -32,7 +32,8 @@
 
     <button type="button" class="green-button shadow-button profile-edit-button profile-button" *ngIf="!isNameEditable"
       (click)="editName()">Edit Name</button>
-    <button type="button" class="green-button shadow-button profile-logout-button profile-button">Logout</button>
+    <button type="button" class="green-button shadow-button profile-logout-button profile-button"
+      (click)="logout()">Logout</button>
 
     <div class="error" *ngIf="error$ | async as error">
       <h1 class="error-type">{{ error.type }}</h1>

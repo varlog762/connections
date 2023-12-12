@@ -41,6 +41,16 @@ export const authErrorAction = createAction(
   props<{ errorType: string; errorMessage: string; email: string | null }>()
 );
 
+export const doLogoutAction = createAction('[Header | Profile] Do Logout');
+
+export const logoutShowMessageAndClearState = createAction(
+  '[LogoutEffects] User Session Delete: Show Message & Clear State'
+);
+
 export const authStateClearAction = createAction(
   '[Header | Profile] Clear Auth State'
+);
+
+export const logoutBtnDisableAction = createAction(
+  '[Header | Profile] Disable Logout Button'
 );
