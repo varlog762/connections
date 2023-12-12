@@ -61,10 +61,5 @@ export const authReducer = createReducer(
       },
     };
   }),
-  on(authStateClearAction, state => {
-    return {
-      ...state,
-      isSubmitInProgress: true,
-    };
-  })
+  on(authStateClearAction, state => initialSate)
 );
