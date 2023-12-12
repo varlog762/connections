@@ -40,3 +40,7 @@ export const authErrorAction = createAction(
   '[Registration | Login Effect] Registration Error',
   props<{ errorType: string; errorMessage: string; email: string | null }>()
 );
+
+export const authStateClearAction = createAction(
+  '[Header | Profile] Clear Auth State'
+);

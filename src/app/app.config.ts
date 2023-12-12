@@ -11,7 +11,6 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 
-// import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
 import { authReducer } from './redux/reducers/auth.reducer';
 import { RegistrationEffects } from './redux/effects/registration.effects';
@@ -20,6 +19,8 @@ import { LoginEffects } from './redux/effects/login.effects';
 import { userProfileReducer } from './redux/reducers/userProfile.reducer';
 import { UserProfileEffects } from './redux/effects/user-profile.effects';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { UpdateUsernameEffects } from './redux/effects/update-username.effects';
+import { UpdateUsernameSuccessEffects } from './redux/effects/update-username-success.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,7 +30,9 @@ export const appConfig: ApplicationConfig = {
       RegistrationEffects,
       RegistrationSuccessEffects,
       LoginEffects,
-      UserProfileEffects
+      UserProfileEffects,
+      UpdateUsernameEffects,
+      UpdateUsernameSuccessEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {

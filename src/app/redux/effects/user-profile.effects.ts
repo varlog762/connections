@@ -6,17 +6,17 @@ import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 
-import { BackendErrorsEnum } from '../../enums/backend-errors.enum';
 import { ToastService } from '../../services/toast.service';
 import {
+  hasBeenLoadedAction,
   loadProfileSuccessAction,
   loadUserProfileAction,
   profileErrorAction,
-  testAction,
 } from '../actions/user-profile.actions';
 import { LoadUserProfileService } from '../../services/load-user-profile.service';
 import { ProfileResponceInterface } from '../../models/profile-response-interface';
 import { selectUserProfile } from '../selectors/user-profile.selectors';
+import { UserProfileInterface } from '../../models/user-profile.interface';
 
 @Injectable()
 export class UserProfileEffects {
@@ -25,20 +25,30 @@ export class UserProfileEffects {
       ofType(loadUserProfileAction),
       withLatestFrom(this.store.pipe(select(selectUserProfile))),
       switchMap(([action, userProfile]) => {
-        if (userProfile !== null) {
+        if (userProfile) {
           this.toastService.showSuccess('Profile Load Successful');
           this.router.navigate(['/profile']);
 
-          return of(testAction());
+          return of(hasBeenLoadedAction());
         } else {
           return this.loadUserProfileService.loadProfile().pipe(
             map((res: ProfileResponceInterface) => {
               this.toastService.showSuccess('Profile Load Successful');
               this.router.navigate(['/profile']);
 
-              return loadProfileSuccessAction(res);
+              const userProfile: UserProfileInterface = {
+                email: res.email.S,
+                uid: res.uid.S,
+                name: res.name.S,
+                createdAt: res.createdAt.S,
+              };
+
+              return loadProfileSuccessAction(userProfile);
             }),
             catchError((err: HttpErrorResponse) => {
+              console.log(err.type);
+              const errorType =
+                err.error && err.error.type ? err.error.type : err.type;
               const errorMessage =
                 err.error && err.error.message
                   ? err.error.message
@@ -46,7 +56,7 @@ export class UserProfileEffects {
 
               this.toastService.showError(errorMessage);
 
-              return of(profileErrorAction());
+              return of(profileErrorAction({ errorType, errorMessage }));
             })
           );
         }

@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import {
   authErrorAction,
+  authStateClearAction,
   loginSuccessAction,
   registrationSuccessAction,
   submitBtnDisableAction,
@@ -58,6 +59,12 @@ export const authReducer = createReducer(
         'rs-uid': payload['rs-uid'],
         Authorization: payload.Authorization,
       },
+    };
+  }),
+  on(authStateClearAction, state => {
+    return {
+      ...state,
+      isSubmitInProgress: true,
     };
   })
 );

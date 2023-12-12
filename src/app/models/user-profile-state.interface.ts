@@ -1,8 +1,9 @@
-import { ProfileResponceInterface } from './profile-response-interface';
 import { ResponseErrorInterface } from './response-error.interface';
+import { UserProfileInterface } from './user-profile.interface';
 
 export interface UserProfileStateInterface {
-  isProfileLoaded: boolean;
-  userProfile: ProfileResponceInterface | null;
+  isNameSet: boolean;
+  isSubmitInProgress: boolean;
+  userProfile: UserProfileInterface | null;
   errors: ResponseErrorInterface | null;
 }
