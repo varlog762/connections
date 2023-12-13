@@ -9,9 +9,23 @@
   justify-content: center;
   align-items: center;
   gap: 50px;
+  margin-bottom: 20px;
 }
 
 .groups-button {
+  padding: 10px;
+}
+
+.groups-title {
+  margin-left: 10px;
+  @include font-styles($fs: 22px, $fw: 700);
+  color: $dark-grey-color;
+}
+
+.groups-container {
+  min-height: calc(100vh - 220px);
+  background-color: $light-grey-color;
+  border-radius: 5px;
   padding: 10px;
 }
 

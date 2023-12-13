@@ -6,6 +6,19 @@
       Group</button>
     <!-- <div class="timer-value">60</div> -->
   </div>
+  <h1 class="groups-title">Groups:</h1>
+  <div class="groups-container">
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+    <app-group-item></app-group-item>
+  </div>
 </div>
 
 <div class="popup-container" id="popupContainer" *ngIf="isShowForm$ | async" (click)="closePopupOnClick($event)">

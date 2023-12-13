@@ -27,7 +27,7 @@ export class LoadGroupsEffects {
             );
 
             if (res) {
-              this.toastService.showSuccess('Droups Loaded Success');
+              this.toastService.showSuccess('Groups Loaded Success');
             }
 
             return [loadGroupsSuccessAction({ groups })];

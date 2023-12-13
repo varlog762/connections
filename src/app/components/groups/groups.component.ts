@@ -9,13 +9,14 @@ import {
   loadGroupsAction,
   showFormAction,
 } from '../../redux/actions/groups.actions';
+import { GroupItemComponent } from '../group-item/group-item.component';
 
 @Component({
   selector: 'app-groups',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
+  imports: [CommonModule, GroupItemComponent],
 })
 export class GroupsComponent implements OnInit {
   public isShowForm$!: Observable<boolean>;
