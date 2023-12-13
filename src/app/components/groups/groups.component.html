@@ -8,7 +8,7 @@
   </div>
   <h1 class="groups-title">Groups:</h1>
   <div class="groups-container" *ngIf="groupList$ | async as groupList">
-    <app-group-item *ngFor="let groupItem of groupList" [groupItem]="groupItem"></app-group-item>
+    <app-group-item *ngFor="let groupItem of groupList | sortByDatePipe" [groupItem]="groupItem"></app-group-item>
 
   </div>
 </div>

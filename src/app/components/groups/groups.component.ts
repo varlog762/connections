@@ -14,13 +14,14 @@ import {
 } from '../../redux/actions/groups.actions';
 import { GroupItemComponent } from '../group-item/group-item.component';
 import { ModifiedGroupInterface } from '../../models/modified-group.interface';
+import { SortByDatePipe } from '../../pipes/sort-by-date.pipe';
 
 @Component({
   selector: 'app-groups',
   standalone: true,
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
-  imports: [CommonModule, GroupItemComponent],
+  imports: [CommonModule, GroupItemComponent, SortByDatePipe],
 })
 export class GroupsComponent implements OnInit {
   public isShowForm$!: Observable<boolean>;

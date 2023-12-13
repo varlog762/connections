@@ -3,14 +3,10 @@ import { ModifiedGroupInterface } from '../models/modified-group.interface';
 
 @Pipe({
   name: 'sortByDatePipe',
+  standalone: true,
 })
 export class SortByDatePipe implements PipeTransform {
   transform(groupList: ModifiedGroupInterface[]): ModifiedGroupInterface[] {
-    return groupList.sort((a, b) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-
-      return dateA.getTime() - dateB.getTime();
-    });
+    return [...groupList].sort((a, b) => +b.createdAt - +a.createdAt);
   }
 }
