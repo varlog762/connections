@@ -3,7 +3,7 @@
     <a routerLink="/" class="header-logo-link">
       <div class="header-logo"></div>
     </a>
-    <div class="user-block">
+    <div class="user-block" *ngIf="isLogged$ | async">
       <div class="user-block-username">Username</div>
       <button type="button" class="user-block-settings" (click)="goToUserProfile()"></button>
       <button type="button" class="user-block-logout" (click)="logout()"></button>

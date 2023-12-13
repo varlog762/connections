@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { loadUserProfileAction } from '../../redux/actions/user-profile.actions';
 import {
   doLogoutAction,
   logoutBtnDisableAction,
 } from '../../redux/actions/auth.actions';
+import { selectIsLogged } from '../../redux/selectors/auth.selectors';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +19,13 @@ import {
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  public isLogged$!: Observable<boolean | null>;
+
   constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.isLogged$ = this.store.select(selectIsLogged);
+  }
 
   goToUserProfile() {
     this.store.dispatch(loadUserProfileAction());
