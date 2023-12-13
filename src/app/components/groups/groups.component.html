@@ -1,17 +1,10 @@
 <div class="container">
-  <div class="manage-groups-container">
-    <div class="timer-container">
-      <button type="button" class="green-button shadow-button refresh-button">Refresh Group List</button>
-      <div class="timer-value"></div>
-    </div>
-    <div class="new-group-container">
-      <button type="button" class="green-button shadow-button create-group-button" (click)="showForm()"
-        *ngIf="!(isShowForm$ | async)">Create New
-        Group</button>
-    </div>
-  </div>
-  <div class="groups-container">
-
+  <div class="groups-buttons-container">
+    <button type="button" class="green-button shadow-button groups-button refresh-button">Refresh Group List</button>
+    <button type="button" class="green-button shadow-button groups-button create-group-button" (click)="showForm()"
+      *ngIf="!(isShowForm$ | async)">Create New
+      Group</button>
+    <!-- <div class="timer-value">60</div> -->
   </div>
 </div>
 

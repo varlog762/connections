@@ -1,9 +1,18 @@
 @import '../../../assets/styles/variables.scss';
 
-.manage-groups-container {
+:host {
+  width: 50%;
+}
+
+.groups-buttons-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.groups-button {
+  padding: 10px;
 }
 
 .popup-container {
