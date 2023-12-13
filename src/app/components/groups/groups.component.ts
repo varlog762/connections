@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { selectIsShowForm } from '../../redux/selectors/groups.selectors';
 import {
   hideFormAction,
+  loadGroupsAction,
   showFormAction,
 } from '../../redux/actions/groups.actions';
 
@@ -22,6 +23,8 @@ export class GroupsComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
+    this.store.dispatch(loadGroupsAction());
+
     this.isShowForm$ = this.store.select(selectIsShowForm);
   }
 

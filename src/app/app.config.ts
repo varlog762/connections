@@ -24,6 +24,7 @@ import { UpdateUsernameSuccessEffects } from './redux/effects/update-username-su
 import { LogoutEffects } from './redux/effects/logout.effects';
 import { LogoutSuccessEffects } from './redux/effects/logout-success.effects';
 import { groupsReducer } from './redux/reducers/groups.reducer';
+import { LoadGroupsEffects } from './redux/effects/load-groups.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,7 +38,8 @@ export const appConfig: ApplicationConfig = {
       UpdateUsernameEffects,
       UpdateUsernameSuccessEffects,
       LogoutEffects,
-      LogoutSuccessEffects
+      LogoutSuccessEffects,
+      LoadGroupsEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {

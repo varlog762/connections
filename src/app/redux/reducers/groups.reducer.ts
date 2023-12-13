@@ -2,13 +2,18 @@ import { createReducer, on } from '@ngrx/store';
 
 import { GroupsStateInterface } from '../../models/groups-state.interface';
 import {
+  groupsErrorAction,
   groupsStateClearAction,
   hideFormAction,
+  loadGroupsSuccessAction,
   showFormAction,
 } from '../actions/groups.actions';
+import { state } from '@angular/animations';
 
 export const initialSate: GroupsStateInterface = {
   isShowForm: false,
+  groupList: null,
+  errors: null,
 };
 
 export const groupsReducer = createReducer(
@@ -25,5 +30,22 @@ export const groupsReducer = createReducer(
       isShowForm: false,
     };
   }),
-  on(groupsStateClearAction, state => initialSate)
+  on(groupsStateClearAction, state => initialSate),
+  on(groupsErrorAction, (state, { errorType, errorMessage }) => {
+    return {
+      ...state,
+      isNameSet: false,
+      errors: {
+        type: errorType,
+        message: errorMessage,
+      },
+      // isSubmitInProgress: false,
+    };
+  }),
+  on(loadGroupsSuccessAction, (state, { groups }) => {
+    return {
+      ...state,
+      groupList: groups,
+    };
+  })
 );
