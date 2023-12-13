@@ -23,6 +23,7 @@ import { UpdateUsernameEffects } from './redux/effects/update-username.effects';
 import { UpdateUsernameSuccessEffects } from './redux/effects/update-username-success.effects';
 import { LogoutEffects } from './redux/effects/logout.effects';
 import { LogoutSuccessEffects } from './redux/effects/logout-success.effects';
+import { groupsReducer } from './redux/reducers/groups.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -52,6 +53,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       authState: authReducer,
       userProfileState: userProfileReducer,
+      groupsState: groupsReducer,
     }),
     provideStoreDevtools({
       maxAge: 25,

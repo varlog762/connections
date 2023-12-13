@@ -1,4 +1,4 @@
-// @import '~@angular/material/prebuilt-themes/your-chosen-theme.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import './assets/styles/variables.scss';
 
 * {
@@ -125,29 +125,10 @@ main {
   margin: 0 0 8px 6px;
 }
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-// ::ng-deep .mat-snack-bar-container {
-//   bottom: 150px;
-//   right: 0;
-//   /* или left: 0; если хотите разместить слева */
-//   z-index: 1000;
-//   /* Вы можете настроить значение z-index по вашему усмотрению */
-// }
-
-.success-toast {
+.success-toasts {
   background-color: #ADDFAD;
 }
 
 .error-toast {
   background-color: #FF9C9C;
-  // opacity: 0.5;
 }

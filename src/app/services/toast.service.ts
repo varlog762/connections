@@ -10,7 +10,7 @@ export class ToastService {
   showSuccess(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 1500,
-      panelClass: ['success-toast'],
+      panelClass: ['success-toasts'],
     });
   }
 

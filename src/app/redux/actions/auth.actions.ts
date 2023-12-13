@@ -54,3 +54,5 @@ export const authStateClearAction = createAction(
 export const logoutBtnDisableAction = createAction(
   '[Header | Profile] Disable Logout Button'
 );
+
+export const isLoggedAction = createAction('[App Component] isLogged Is True');

@@ -1,22 +1,31 @@
 <div class="container">
   <div class="manage-groups-container">
     <div class="timer-container">
-      <button type="button" group="green-button shadow-button refresh-button">Refresh Group List</button>
+      <button type="button" class="green-button shadow-button refresh-button">Refresh Group List</button>
       <div class="timer-value"></div>
     </div>
     <div class="new-group-container">
-      <button type="button" class="green-button shadow-button create-group-button">Create New Group</button>
-      <form class="newGroupForm">
-        <label for="newGroupName"></label>
-        <input type="text" name="newGroupName" id="newGroupName">
-        <div class="form-buttons-container">
-          <button type="submit" class="green-button shadow button save-new-group">Save</button>
-          <button type="button" class="green-button shadow button cancel-new-group">Cancel</button>
-        </div>
-      </form>
+      <button type="button" class="green-button shadow-button create-group-button" (click)="showForm()"
+        *ngIf="!(isShowForm$ | async)">Create New
+        Group</button>
     </div>
   </div>
   <div class="groups-container">
 
+  </div>
+</div>
+
+<div class="popup-container" id="popupContainer" *ngIf="isShowForm$ | async" (click)="closePopupOnClick($event)">
+  <div class="popup">
+    <form class="form">
+      <label for="newGroupName" class="new-group-name-label form-label popup-label">Enter Group Name</label>
+      <input type="text" name="newGroupName" id="newGroupName" class="form-input popup-input">
+      <div class="form-buttons-container">
+        <button type="submit" class="green-button shadow-button save-new-group form-btn popup-btn"
+          (submit)="onSubmit($event)">Save</button>
+        <button type="button" id="popupCancel"
+          class="green-button shadow-button cancel-new-group form-btn popup-btn">Cancel</button>
+      </div>
+    </form>
   </div>
 </div>

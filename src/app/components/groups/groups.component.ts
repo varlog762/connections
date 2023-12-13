@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { selectIsShowForm } from '../../redux/selectors/groups.selectors';
+import {
+  hideFormAction,
+  showFormAction,
+} from '../../redux/actions/groups.actions';
 
 @Component({
   selector: 'app-groups',
@@ -8,4 +16,28 @@ import { Component } from '@angular/core';
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
 })
-export class GroupsComponent {}
+export class GroupsComponent implements OnInit {
+  public isShowForm$!: Observable<boolean>;
+
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.isShowForm$ = this.store.select(selectIsShowForm);
+  }
+
+  closePopupOnClick(event: Event) {
+    const target = event.target as HTMLElement;
+
+    if (target.id === 'popupContainer' || target.id === 'popupCancel') {
+      this.store.dispatch(hideFormAction());
+    }
+  }
+
+  showForm(): void {
+    this.store.dispatch(showFormAction());
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+  }
+}

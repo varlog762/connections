@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import {
   authErrorAction,
   authStateClearAction,
+  isLoggedAction,
   loginSuccessAction,
   logoutBtnDisableAction,
   registrationSuccessAction,
@@ -68,5 +69,11 @@ export const authReducer = createReducer(
       },
     };
   }),
-  on(authStateClearAction, state => initialSate)
+  on(authStateClearAction, state => initialSate),
+  on(isLoggedAction, state => {
+    return {
+      ...state,
+      isLogged: true,
+    };
+  })
 );

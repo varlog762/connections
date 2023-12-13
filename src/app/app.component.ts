@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
+import { Store } from '@ngrx/store';
+
+import { isLoggedAction } from './redux/actions/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +13,16 @@ import { HeaderComponent } from './components/header/header.component';
   styleUrl: './app.component.scss',
   imports: [CommonModule, RouterOutlet, HeaderComponent],
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.getUserFromLacalStorage();
+  }
+
+  getUserFromLacalStorage(): void {
+    if (localStorage.getItem('currentUser')) {
+      this.store.dispatch(isLoggedAction());
+    }
+  }
+}
