@@ -8,3 +8,8 @@ export const selectIsShowForm = createSelector(
   selectGroupsFeature,
   state => state.isShowForm
 );
+
+export const selectGroupList = createSelector(
+  selectGroupsFeature,
+  state => state.groupList
+);

@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { selectIsShowForm } from '../../redux/selectors/groups.selectors';
+import {
+  selectGroupList,
+  selectIsShowForm,
+} from '../../redux/selectors/groups.selectors';
 import {
   hideFormAction,
   loadGroupsAction,
   showFormAction,
 } from '../../redux/actions/groups.actions';
 import { GroupItemComponent } from '../group-item/group-item.component';
+import { ModifiedGroupInterface } from '../../models/modified-group.interface';
 
 @Component({
   selector: 'app-groups',
@@ -21,12 +25,16 @@ import { GroupItemComponent } from '../group-item/group-item.component';
 export class GroupsComponent implements OnInit {
   public isShowForm$!: Observable<boolean>;
 
+  public groupList$!: Observable<ModifiedGroupInterface[] | null>;
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadGroupsAction());
 
     this.isShowForm$ = this.store.select(selectIsShowForm);
+
+    this.groupList$ = this.store.select(selectGroupList);
   }
 
   closePopupOnClick(event: Event) {
@@ -44,4 +52,8 @@ export class GroupsComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault();
   }
+
+  // getSearchItemID(index: number, cardItem: CardInterface): string {
+  //   return cardItem.id;
+  // }
 }

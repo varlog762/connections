@@ -7,17 +7,9 @@
     <!-- <div class="timer-value">60</div> -->
   </div>
   <h1 class="groups-title">Groups:</h1>
-  <div class="groups-container">
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
-    <app-group-item></app-group-item>
+  <div class="groups-container" *ngIf="groupList$ | async as groupList">
+    <app-group-item *ngFor="let groupItem of groupList" [groupItem]="groupItem"></app-group-item>
+
   </div>
 </div>
 
@@ -35,3 +27,12 @@
     </form>
   </div>
 </div>
+
+<ng-template #noResults>
+  <div class="no-results">
+    <div class="no-results-logo"></div>
+    <div class="no-results-message">
+      Enter your request or create your own cards.
+    </div>
+  </div>
+</ng-template>
