@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import {
   selectGroupList,
@@ -26,16 +26,24 @@ import { SortByDatePipe } from '../../pipes/sort-by-date.pipe';
 export class GroupsComponent implements OnInit {
   public isShowForm$!: Observable<boolean>;
 
-  public groupList$!: Observable<ModifiedGroupInterface[] | null>;
+  public groupList!: ModifiedGroupInterface[] | null;
+
+  private groupListSubscription$!: Subscription;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadGroupsAction());
-
     this.isShowForm$ = this.store.select(selectIsShowForm);
 
-    this.groupList$ = this.store.select(selectGroupList);
+    this.groupListSubscription$ = this.store
+      .select(selectGroupList)
+      .subscribe(list => {
+        if (!list?.length) {
+          this.store.dispatch(loadGroupsAction());
+        }
+
+        this.groupList = list;
+      });
   }
 
   closePopupOnClick(event: Event) {
@@ -50,11 +58,15 @@ export class GroupsComponent implements OnInit {
     this.store.dispatch(showFormAction());
   }
 
-  onSubmit(event: Event) {
+  onSubmit(event: Event): void {
     event.preventDefault();
   }
 
-  // getSearchItemID(index: number, cardItem: CardInterface): string {
-  //   return cardItem.id;
-  // }
+  getGroupID(index: number, groupItem: ModifiedGroupInterface): string {
+    return groupItem.id;
+  }
+
+  ngOnDestroy(): void {
+    this.groupListSubscription$.unsubscribe();
+  }
 }
