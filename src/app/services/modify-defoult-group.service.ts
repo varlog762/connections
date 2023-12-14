@@ -13,7 +13,6 @@ export class ModifyDefaultGroupService {
       name: group.name.S,
       createdAt: group.createdAt.S,
       createdBy: group.createdBy.S,
-      isMyGroup: false,
     };
   }
 }

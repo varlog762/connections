@@ -4,10 +4,10 @@ export function groupNameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const name: string = control.value;
 
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(name)) {
-      return { specialCharacterErr: true };
+    if (/^[a-zA-Z0-9\s]*$/.test(name)) {
+      return null;
     }
 
-    return null;
+    return { specialCharacterErr: true };
   };
 }

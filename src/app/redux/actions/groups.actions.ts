@@ -24,3 +24,22 @@ export const loadGroupsSuccessAction = createAction(
   '[LoadGroupsEffects] Groups Loading Succsess',
   props<{ groups: ModifiedGroupInterface[] }>()
 );
+
+export const groupsSubmitBtnDisableAction = createAction(
+  '[Groups Component] Disable Submit Button'
+);
+
+export const createNewGroupAction = createAction(
+  '[Groups Component] Create New Group',
+  props<{
+    payload: {
+      name: string;
+    };
+  }>()
+);
+export const createGroupSuccessAction = createAction(
+  '[CreateNewGroupEffects] New Group Created Success',
+  props<{
+    payload: ModifiedGroupInterface;
+  }>()
+);

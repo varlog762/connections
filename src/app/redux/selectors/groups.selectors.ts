@@ -13,3 +13,8 @@ export const selectGroupList = createSelector(
   selectGroupsFeature,
   state => state.groupList
 );
+
+export const selectIsNewGroupSubmiting = createSelector(
+  selectGroupsFeature,
+  state => state.isNewGroupSubmitInProgress
+);

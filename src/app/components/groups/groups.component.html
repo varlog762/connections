@@ -1,8 +1,8 @@
 <div class="container">
   <div class="groups-buttons-container">
     <button type="button" class="green-button shadow-button groups-button refresh-button">Refresh Group List</button>
-    <button type="button" class="green-button shadow-button groups-button create-group-button" (click)="showForm()"
-      *ngIf="!(isShowForm$ | async)">Create New
+    <button type="button" class="green-button shadow-button groups-button create-group-button"
+      (click)="showForm()">Create New
       Group</button>
     <!-- <div class="timer-value">60</div> -->
   </div>
@@ -15,15 +15,28 @@
 </div>
 
 <div class="popup-container" id="popupContainer" *ngIf="isShowForm$ | async" (click)="closePopupOnClick($event)">
+  <!-- <div class="popup-container" id="popupContainer" *ngIf="isShowForm$ | async"> -->
   <div class="popup">
-    <form class="form">
-      <label for="newGroupName" class="new-group-name-label form-label popup-label">Enter Group Name</label>
-      <input type="text" name="newGroupName" id="newGroupName" class="form-input popup-input">
+    <form [formGroup]="newGroupNameForm" class="form" (submit)="onSubmit($event)">
+      <label for="newGroupName" class="new-group-name-label form-label popup-label">Enter
+        Group Name</label>
+      <input formControlName="newGroupName" type="text" name="newGroupName" id="newGroupName"
+        class="form-input popup-input"
+        [ngStyle]="{'border-color': isFieldInvalid(newGroupNameForm, 'newGroupName') ? 'red' : ''}">
+
+      <div *ngIf="isFieldInvalid(newGroupNameForm,'newGroupName')" class="invalid-feedback">
+        <div *ngIf="isFieldHasError(newGroupNameForm, 'newGroupName', 'required')">Please enter a name.</div>
+        <div *ngIf="isFieldHasError(newGroupNameForm, 'newGroupName', 'maxlength')">The name is too long.</div>
+        <div *ngIf="isFieldHasError(newGroupNameForm, 'newGroupName', 'specialCharacterErr')">Only letters, digits and
+          spaces are allowed.
+        </div>
+      </div>
+
       <div class="form-buttons-container">
-        <button type="submit" class="green-button shadow-button save-new-group form-btn popup-btn"
-          (submit)="onSubmit($event)">Save</button>
-        <button type="button" id="popupCancel"
-          class="green-button shadow-button cancel-new-group form-btn popup-btn">Cancel</button>
+        <button type="submit" class="green-button shadow-button save-new-group form-btn popup-btn form-btn"
+          [disabled]="newGroupNameForm.invalid || (isSubmitInProgress$ | async)">Save</button>
+        <button type="button" id="popupCancel" class="green-button shadow-button cancel-new-group form-btn popup-btn"
+          [disabled]="isSubmitInProgress$ | async">Cancel</button>
       </div>
     </form>
   </div>

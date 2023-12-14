@@ -1,7 +1,6 @@
 export interface ModifiedGroupInterface {
   id: string;
   name: string;
-  createdAt: string;
+  createdAt: string | number;
   createdBy: string;
-  isMyGroup: boolean;
 }
