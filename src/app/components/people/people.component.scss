@@ -1,0 +1,38 @@
+@import '../../../assets/styles/variables.scss';
+
+:host {
+  width: 50%;
+}
+
+.people-buttons-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.people-button {
+  padding: 10px;
+}
+
+.timer-value {
+  position: absolute;
+  top: 7px;
+  left: 205px;
+  @include font-styles($fs: 18px, $fw: 700);
+  color: $red-color;
+}
+
+.people-title {
+  margin-left: 10px;
+  @include font-styles($fs: 22px, $fw: 700);
+  color: #000;
+}
+
+.people-container {
+  min-height: calc(100vh - 220px);
+  background-color: $light-grey-color;
+  border-radius: 5px;
+  padding: 10px;
+}
