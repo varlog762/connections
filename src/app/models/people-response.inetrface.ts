@@ -1,6 +1,6 @@
-import { PersonItemResponse } from './person-item-response.interface';
+import { PersonItemResponseInterface } from './person-item-response.interface';
 
-export interface PeopleResponse {
+export interface PeopleResponseInterface {
   Count: 'number';
-  Items: PersonItemResponse[];
+  Items: PersonItemResponseInterface[];
 }

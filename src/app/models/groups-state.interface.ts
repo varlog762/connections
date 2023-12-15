@@ -10,5 +10,4 @@ export interface GroupsStateInterface {
   groupList: ModifiedGroupInterface[];
   errors: ResponseErrorInterface | null;
   groupsTimerValue: number | null;
-  peopleTimerValue: number | null;
 }

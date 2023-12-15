@@ -4,7 +4,6 @@ import { GroupsStateInterface } from '../../models/groups-state.interface';
 import {
   createGroupSuccessAction,
   decrementGroupsTimerValueAction,
-  decrementPeopleTimerValueAction,
   deleteGroupSuccessAction,
   groupsErrorAction,
   groupsRefreshBtnDisableAction,
@@ -27,7 +26,6 @@ export const initialSate: GroupsStateInterface = {
   groupList: [],
   errors: null,
   groupsTimerValue: null,
-  peopleTimerValue: null,
 };
 
 export const groupsReducer = createReducer(
@@ -123,12 +121,6 @@ export const groupsReducer = createReducer(
     return {
       ...state,
       groupsTimerValue: value,
-    };
-  }),
-  on(decrementPeopleTimerValueAction, (state, { value }) => {
-    return {
-      ...state,
-      peopleTimerValue: value,
     };
   })
 );

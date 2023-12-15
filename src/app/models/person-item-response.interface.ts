@@ -1,4 +1,4 @@
-export interface PersonItemResponse {
+export interface PersonItemResponseInterface {
   name: {
     S: 'string'; // user name
   };

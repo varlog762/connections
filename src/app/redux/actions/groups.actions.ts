@@ -27,7 +27,7 @@ export const loadGroupsAction = createAction(
 export const groupsStateClearAction = createAction('[] Clear Groups State');
 
 export const groupsErrorAction = createAction(
-  '[Registration | Login Effect] Registration Error',
+  '[Registration | Login Effect] Groups Error',
   props<{ errorType: string; errorMessage: string }>()
 );
 
@@ -78,13 +78,6 @@ export const startTimer = createAction('[Groups Component] Start Timer');
 
 export const decrementGroupsTimerValueAction = createAction(
   '[TimerService] Decrement Groups Timer Value',
-  props<{
-    value: number | null;
-  }>()
-);
-
-export const decrementPeopleTimerValueAction = createAction(
-  '[TimerService] Decrement People Timer Value',
   props<{
     value: number | null;
   }>()
