@@ -15,7 +15,6 @@
 </div>
 
 <div class="popup-container" id="popupContainer" *ngIf="isShowForm$ | async" (click)="closePopupOnClick($event)">
-  <!-- <div class="popup-container" id="popupContainer" *ngIf="isShowForm$ | async"> -->
   <div class="popup">
     <form [formGroup]="newGroupNameForm" class="form" (submit)="onSubmit($event)">
       <label for="newGroupName" class="new-group-name-label form-label popup-label">Enter
@@ -32,7 +31,7 @@
         </div>
       </div>
 
-      <div class="form-buttons-container">
+      <div class="form-buttons-container popup-buttons-container ">
         <button type="submit" class="green-button shadow-button save-new-group form-btn popup-btn form-btn"
           [disabled]="newGroupNameForm.invalid || (isSubmitInProgress$ | async)">Save</button>
         <button type="button" id="popupCancel" class="green-button shadow-button cancel-new-group form-btn popup-btn"

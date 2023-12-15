@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { GroupsResponseInterface } from '../models/groups-response.interface';
 import { NewGroupResponseInterface } from '../models/new-group-response.interface';
 import { ModifiedGroupInterface } from '../models/modified-group.interface';
 import { CurrentUserInterface } from '../models/current-user.interface';
+import { GroupDeletingRequestInterface } from '../models/group-deleting-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class ManageGroupsService {
     const currentDate = new Date().getTime();
 
     const currentUser: CurrentUserInterface = JSON.parse(
-      JSON.stringify(localStorage.getItem('currentUser'))
+      localStorage.getItem('currentUser') as string
     );
 
     return {
@@ -39,9 +40,15 @@ export class ManageGroupsService {
     };
   }
 
+  deleteGroup(data: GroupDeletingRequestInterface): Observable<void> {
+    const groupIdParams = new HttpParams().set('groupID', data.groupID);
+
+    return this.http.delete<void>('/groups/delete', { params: groupIdParams });
+  }
+
   isGroupOwner(groupOwnerId: string): boolean {
     const currentUser: CurrentUserInterface = JSON.parse(
-      JSON.stringify(localStorage.getItem('currentUser'))
+      localStorage.getItem('currentUser') as string
     );
 
     return currentUser['rs-uid'] === groupOwnerId;

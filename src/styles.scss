@@ -11,6 +11,10 @@ body {
   position: relative;
 }
 
+.body-overflow-hidden {
+  overflow: hidden;
+}
+
 a {
   text-decoration: none;
 }
@@ -127,10 +131,12 @@ main {
   margin: 0 0 8px 6px;
 }
 
-.success-toasts {
-  background-color: #ADDFAD;
-}
+::ng-deep {
+  .mat-snack-bar-container.success-toasts {
+    background-color: #ADDFAD;
+  }
 
-.error-toast {
-  background-color: #FF9C9C;
+  .mat-snack-bar-container.error-toast {
+    background-color: #FF9C9C;
+  }
 }

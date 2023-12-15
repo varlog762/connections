@@ -4,6 +4,8 @@ import { ResponseErrorInterface } from './response-error.interface';
 export interface GroupsStateInterface {
   isNewGroupSubmitInProgress: boolean;
   isShowForm: boolean;
+  isShowDeletePopup: boolean;
+  delGroupId: string | null;
   groupList: ModifiedGroupInterface[];
   errors: ResponseErrorInterface | null;
 }

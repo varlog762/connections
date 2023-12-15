@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import {
   selectGroupList,
-  selectIsNewGroupSubmiting,
+  selectIsGroupSubmiting,
   selectIsShowForm,
 } from '../../redux/selectors/groups.selectors';
 import {
@@ -63,7 +63,7 @@ export class GroupsComponent implements OnInit {
   ngOnInit(): void {
     this.isShowForm$ = this.store.select(selectIsShowForm);
 
-    this.isSubmitInProgress$ = this.store.select(selectIsNewGroupSubmiting);
+    this.isSubmitInProgress$ = this.store.select(selectIsGroupSubmiting);
 
     this.groupListSubscription$ = this.store
       .select(selectGroupList)
@@ -113,6 +113,7 @@ export class GroupsComponent implements OnInit {
       );
 
       this.store.dispatch(groupsSubmitBtnDisableAction());
+      this.newGroupNameForm.get('newGroupName')?.reset();
     }
   }
 

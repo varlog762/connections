@@ -26,6 +26,7 @@ import { LogoutSuccessEffects } from './redux/effects/logout-success.effects';
 import { groupsReducer } from './redux/reducers/groups.reducer';
 import { LoadGroupsEffects } from './redux/effects/load-groups.effects';
 import { CreateNewGroupEffects } from './redux/effects/create-new-group.effects';
+import { DeleteGroupEffects } from './redux/effects/delete-group.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,7 +42,8 @@ export const appConfig: ApplicationConfig = {
       LogoutEffects,
       LogoutSuccessEffects,
       LoadGroupsEffects,
-      CreateNewGroupEffects
+      CreateNewGroupEffects,
+      DeleteGroupEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {

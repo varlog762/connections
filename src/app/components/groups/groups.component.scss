@@ -52,7 +52,7 @@
   border-radius: 5px;
 }
 
-.form-buttons-container {
+.popup-buttons-container {
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -80,6 +80,12 @@
   margin-bottom: 5px;
 }
 
+.delete-group-popup-title {
+  @include font-styles($fs: 18px, $fw: 700);
+  color: $dark-grey-color;
+  text-align: center;
+}
+
 .ng-star-inserted {
-  margin-left: 15px;
+  padding-left: 15px;
 }

@@ -9,12 +9,17 @@ export const selectIsShowForm = createSelector(
   state => state.isShowForm
 );
 
+export const selectIsShowPopup = createSelector(
+  selectGroupsFeature,
+  state => state.isShowDeletePopup
+);
+
 export const selectGroupList = createSelector(
   selectGroupsFeature,
   state => state.groupList
 );
 
-export const selectIsNewGroupSubmiting = createSelector(
+export const selectIsGroupSubmiting = createSelector(
   selectGroupsFeature,
   state => state.isNewGroupSubmitInProgress
 );

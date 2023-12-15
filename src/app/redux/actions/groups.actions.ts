@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ModifiedGroupInterface } from '../../models/modified-group.interface';
+import { GroupDeletingRequestInterface } from '../../models/group-deleting-request.interface';
 
 export const showFormAction = createAction(
   '[Groups Component] Show Form For Create New Group'
@@ -7,6 +8,15 @@ export const showFormAction = createAction(
 
 export const hideFormAction = createAction(
   '[Groups Component] Hide Form For Create New Group'
+);
+
+export const showPopupAction = createAction(
+  '[Group Item Component] Show Delete Group Popup',
+  props<{ delGroupId: string }>()
+);
+
+export const hidePopupAction = createAction(
+  '[Group Item Component] Hide Delete Group Popup'
 );
 
 export const loadGroupsAction = createAction(
@@ -37,9 +47,20 @@ export const createNewGroupAction = createAction(
     };
   }>()
 );
+
 export const createGroupSuccessAction = createAction(
   '[CreateNewGroupEffects] New Group Created Success',
   props<{
     payload: ModifiedGroupInterface;
   }>()
+);
+
+export const deleteGroupAction = createAction(
+  '[GroupItem Component] Delete Group',
+  props<GroupDeletingRequestInterface>()
+);
+
+export const deleteGroupSuccessAction = createAction(
+  '[GroupItem Component] Group Deleted Success',
+  props<GroupDeletingRequestInterface>()
 );

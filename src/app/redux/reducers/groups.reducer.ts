@@ -3,17 +3,23 @@ import { createReducer, on } from '@ngrx/store';
 import { GroupsStateInterface } from '../../models/groups-state.interface';
 import {
   createGroupSuccessAction,
+  deleteGroupSuccessAction,
   groupsErrorAction,
   groupsStateClearAction,
   groupsSubmitBtnDisableAction,
   hideFormAction,
+  hidePopupAction,
   loadGroupsSuccessAction,
   showFormAction,
+  showPopupAction,
 } from '../actions/groups.actions';
+import { state } from '@angular/animations';
 
 export const initialSate: GroupsStateInterface = {
   isNewGroupSubmitInProgress: false,
   isShowForm: false,
+  isShowDeletePopup: false,
+  delGroupId: null,
   groupList: [],
   errors: null,
 };
@@ -30,6 +36,21 @@ export const groupsReducer = createReducer(
     return {
       ...state,
       isShowForm: false,
+    };
+  }),
+  on(showPopupAction, (state, { delGroupId }) => {
+    return {
+      ...state,
+      isShowDeletePopup: true,
+      delGroupId: delGroupId,
+    };
+  }),
+  on(hidePopupAction, state => {
+    return {
+      ...state,
+      isNewGroupSubmitInProgress: false,
+      isShowDeletePopup: false,
+      delGroupId: null,
     };
   }),
   on(groupsStateClearAction, state => initialSate),
@@ -69,6 +90,16 @@ export const groupsReducer = createReducer(
       ...state,
       groupList: [...state.groupList, newGroupItem] || [],
       isNewGroupSubmitInProgress: false,
+    };
+  }),
+  on(deleteGroupSuccessAction, (state, { groupID }) => {
+    return {
+      ...state,
+      isNewGroupSubmitInProgress: false,
+      isShowDeletePopup: false,
+      delGroupId: null,
+      groupList: state.groupList.filter(item => item.id !== groupID),
+      errors: null,
     };
   })
 );
