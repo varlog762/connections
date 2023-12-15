@@ -5,6 +5,7 @@
 }
 
 .groups-buttons-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,10 +17,18 @@
   padding: 10px;
 }
 
+.timer-value {
+  position: absolute;
+  top: 7px;
+  left: 110px;
+  @include font-styles($fs: 18px, $fw: 700);
+  color: $red-color;
+}
+
 .groups-title {
   margin-left: 10px;
   @include font-styles($fs: 22px, $fw: 700);
-  color: $dark-grey-color;
+  color: #000;
 }
 
 .groups-container {

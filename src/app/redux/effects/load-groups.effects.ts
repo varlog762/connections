@@ -13,13 +13,14 @@ import {
 import { ManageGroupsService } from '../../services/manage-groups.service';
 import { GroupResponseInterface } from '../../models/group-response.interface';
 import { ModifyDefaultGroupService } from '../../services/modify-defoult-group.service';
+import { TimerService } from '../../services/timer.service';
 
 @Injectable()
 export class LoadGroupsEffects {
   reg$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadGroupsAction),
-      switchMap(() =>
+      switchMap(({ isLoadManual }) =>
         this.manageGroupsSrv.loadGroups().pipe(
           mergeMap(res => {
             const groups = res.Items.map((group: GroupResponseInterface) =>
@@ -28,6 +29,10 @@ export class LoadGroupsEffects {
 
             if (res) {
               this.toastService.showSuccess('Groups Loaded Success');
+            }
+
+            if (isLoadManual) {
+              this.timerSrv.startTimer();
             }
 
             return [loadGroupsSuccessAction({ groups })];
@@ -51,6 +56,7 @@ export class LoadGroupsEffects {
     private actions$: Actions,
     private toastService: ToastService,
     private manageGroupsSrv: ManageGroupsService,
-    private modifyDefaultGroupSrv: ModifyDefaultGroupService
+    private modifyDefaultGroupSrv: ModifyDefaultGroupService,
+    private timerSrv: TimerService
   ) {}
 }

@@ -3,8 +3,12 @@ import { createReducer, on } from '@ngrx/store';
 import { GroupsStateInterface } from '../../models/groups-state.interface';
 import {
   createGroupSuccessAction,
+  decrementGroupsTimerValueAction,
+  decrementPeopleTimerValueAction,
   deleteGroupSuccessAction,
   groupsErrorAction,
+  groupsRefreshBtnDisableAction,
+  groupsRefreshBtnEnableAction,
   groupsStateClearAction,
   groupsSubmitBtnDisableAction,
   hideFormAction,
@@ -13,15 +17,17 @@ import {
   showFormAction,
   showPopupAction,
 } from '../actions/groups.actions';
-import { state } from '@angular/animations';
 
 export const initialSate: GroupsStateInterface = {
   isNewGroupSubmitInProgress: false,
+  isRefreshGroupsInProgress: false,
   isShowForm: false,
   isShowDeletePopup: false,
   delGroupId: null,
   groupList: [],
   errors: null,
+  groupsTimerValue: null,
+  peopleTimerValue: null,
 };
 
 export const groupsReducer = createReducer(
@@ -58,6 +64,7 @@ export const groupsReducer = createReducer(
     return {
       ...state,
       isNewGroupSubmitInProgress: false,
+      isRefreshGroupsInProgress: false,
       isNameSet: false,
       errors: {
         type: errorType,
@@ -78,6 +85,15 @@ export const groupsReducer = createReducer(
       isNewGroupSubmitInProgress: true,
     };
   }),
+  on(groupsRefreshBtnDisableAction, state => {
+    return {
+      ...state,
+      isRefreshGroupsInProgress: true,
+    };
+  }),
+  on(groupsRefreshBtnEnableAction, state => {
+    return { ...state, isRefreshGroupsInProgress: false };
+  }),
   on(createGroupSuccessAction, (state, { payload }) => {
     const newGroupItem = {
       id: payload.id,
@@ -96,10 +112,23 @@ export const groupsReducer = createReducer(
     return {
       ...state,
       isNewGroupSubmitInProgress: false,
+      isRefreshGroupsInProgress: false,
       isShowDeletePopup: false,
       delGroupId: null,
       groupList: state.groupList.filter(item => item.id !== groupID),
       errors: null,
+    };
+  }),
+  on(decrementGroupsTimerValueAction, (state, { value }) => {
+    return {
+      ...state,
+      groupsTimerValue: value,
+    };
+  }),
+  on(decrementPeopleTimerValueAction, (state, { value }) => {
+    return {
+      ...state,
+      peopleTimerValue: value,
     };
   })
 );

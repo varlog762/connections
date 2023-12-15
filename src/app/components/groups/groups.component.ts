@@ -5,11 +5,14 @@ import { Observable, Subscription } from 'rxjs';
 
 import {
   selectGroupList,
+  selectGroupsTimerValue,
+  selectIsGroupRefreshing,
   selectIsGroupSubmiting,
   selectIsShowForm,
 } from '../../redux/selectors/groups.selectors';
 import {
   createNewGroupAction,
+  groupsRefreshBtnDisableAction,
   groupsSubmitBtnDisableAction,
   hideFormAction,
   loadGroupsAction,
@@ -44,6 +47,10 @@ export class GroupsComponent implements OnInit {
 
   public isSubmitInProgress$!: Observable<boolean>;
 
+  public isGroupsRefreshing$!: Observable<boolean>;
+
+  public groupsTimerValue$!: Observable<number | null>;
+
   public groupList!: ModifiedGroupInterface[] | null;
 
   private groupListSubscription$!: Subscription;
@@ -63,13 +70,17 @@ export class GroupsComponent implements OnInit {
   ngOnInit(): void {
     this.isShowForm$ = this.store.select(selectIsShowForm);
 
+    this.groupsTimerValue$ = this.store.select(selectGroupsTimerValue);
+
     this.isSubmitInProgress$ = this.store.select(selectIsGroupSubmiting);
+
+    this.isGroupsRefreshing$ = this.store.select(selectIsGroupRefreshing);
 
     this.groupListSubscription$ = this.store
       .select(selectGroupList)
       .subscribe(list => {
         if (!list?.length) {
-          this.store.dispatch(loadGroupsAction());
+          this.store.dispatch(loadGroupsAction({ isLoadManual: false }));
         }
 
         this.groupList = list;
@@ -115,6 +126,11 @@ export class GroupsComponent implements OnInit {
       this.store.dispatch(groupsSubmitBtnDisableAction());
       this.newGroupNameForm.get('newGroupName')?.reset();
     }
+  }
+
+  refreshGroups(): void {
+    this.store.dispatch(loadGroupsAction({ isLoadManual: true }));
+    this.store.dispatch(groupsRefreshBtnDisableAction());
   }
 
   getGroupID(index: number, groupItem: ModifiedGroupInterface): string {

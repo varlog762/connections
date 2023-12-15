@@ -23,3 +23,13 @@ export const selectIsGroupSubmiting = createSelector(
   selectGroupsFeature,
   state => state.isNewGroupSubmitInProgress
 );
+
+export const selectIsGroupRefreshing = createSelector(
+  selectGroupsFeature,
+  state => state.isRefreshGroupsInProgress
+);
+
+export const selectGroupsTimerValue = createSelector(
+  selectGroupsFeature,
+  state => state.groupsTimerValue
+);

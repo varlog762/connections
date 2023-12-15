@@ -20,7 +20,8 @@ export const hidePopupAction = createAction(
 );
 
 export const loadGroupsAction = createAction(
-  '[Groups Component] Load Groups List'
+  '[Groups Component] Load Groups List',
+  props<{ isLoadManual: boolean }>()
 );
 
 export const groupsStateClearAction = createAction('[] Clear Groups State');
@@ -37,6 +38,14 @@ export const loadGroupsSuccessAction = createAction(
 
 export const groupsSubmitBtnDisableAction = createAction(
   '[Groups Component] Disable Submit Button'
+);
+
+export const groupsRefreshBtnDisableAction = createAction(
+  '[Groups Component] Disable Refresh Groups Button'
+);
+
+export const groupsRefreshBtnEnableAction = createAction(
+  '[Timer Service] Enable Refresh Groups Button'
 );
 
 export const createNewGroupAction = createAction(
@@ -63,4 +72,20 @@ export const deleteGroupAction = createAction(
 export const deleteGroupSuccessAction = createAction(
   '[GroupItem Component] Group Deleted Success',
   props<GroupDeletingRequestInterface>()
+);
+
+export const startTimer = createAction('[Groups Component] Start Timer');
+
+export const decrementGroupsTimerValueAction = createAction(
+  '[TimerService] Decrement Groups Timer Value',
+  props<{
+    value: number | null;
+  }>()
+);
+
+export const decrementPeopleTimerValueAction = createAction(
+  '[TimerService] Decrement People Timer Value',
+  props<{
+    value: number | null;
+  }>()
 );
