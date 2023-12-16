@@ -7,6 +7,7 @@ import { NewGroupResponseInterface } from '../models/new-group-response.interfac
 import { ModifiedGroupInterface } from '../models/modified-group.interface';
 import { CurrentUserInterface } from '../models/current-user.interface';
 import { GroupDeletingRequestInterface } from '../models/group-deleting-request.interface';
+import { GroupResponseInterface } from '../models/group-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -52,5 +53,14 @@ export class ManageGroupsService {
     );
 
     return currentUser['rs-uid'] === groupOwnerId;
+  }
+
+  modifyGroup(group: GroupResponseInterface): ModifiedGroupInterface {
+    return {
+      id: group.id.S,
+      name: group.name.S,
+      createdAt: group.createdAt.S,
+      createdBy: group.createdBy.S,
+    };
   }
 }

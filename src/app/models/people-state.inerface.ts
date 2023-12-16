@@ -1,8 +1,12 @@
-import { CompanionItemResponse } from './companion-item-response.interface';
-import { PersonItemResponseInterface } from './person-item-response.interface';
+import { ModifiedCompanionInterface } from './modified-companion.interface';
+import { ModifiedPersonInterface } from './modified-person.interface';
+import { ResponseErrorInterface } from './response-error.interface';
 
 export interface PeopleStateInerface {
   isRefreshPeopleInProgress: boolean;
-  peopleList: PersonItemResponseInterface[];
-  companionsList: CompanionItemResponse[];
+  peopleList: ModifiedPersonInterface[];
+  wasAttemptToLoadCompanions: boolean;
+  companionsList: ModifiedCompanionInterface[];
+  errors: ResponseErrorInterface | null;
+  peopleTimerValue: number | null;
 }

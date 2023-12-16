@@ -31,8 +31,9 @@
 }
 
 .people-container {
-  min-height: calc(100vh - 220px);
+  height: calc(100vh - 210px);
   background-color: $light-grey-color;
   border-radius: 5px;
   padding: 10px;
+  overflow: auto;
 }

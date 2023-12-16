@@ -5,36 +5,35 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastService } from '../../services/toast.service';
-import {
-  groupsErrorAction,
-  loadGroupsAction,
-  loadGroupsSuccessAction,
-} from '../actions/groups.actions';
-import { ManageGroupsService } from '../../services/manage-groups.service';
-import { GroupResponseInterface } from '../../models/group-response.interface';
 import { TimerService } from '../../services/timer.service';
+import {
+  loadCompanionsSuccessAction,
+  loadPeopleAction,
+  peopleErrorAction,
+} from '../actions/people.actions';
+import { ManagePeopleService } from '../../services/manage-people.service';
+import { CompanionItemResponseInterface } from '../../models/companion-item-response.interface';
 
 @Injectable()
-export class LoadGroupsEffects {
+export class LoadCompanionsEffects {
   reg$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadGroupsAction),
+      ofType(loadPeopleAction),
       switchMap(({ isLoadManual }) =>
-        this.manageGroupsSrv.loadGroups().pipe(
+        this.managePeopleSrv.loadCompanions().pipe(
           mergeMap(res => {
-            const groups = res.Items.map((group: GroupResponseInterface) =>
-              this.manageGroupsSrv.modifyGroup(group)
+            const companions = res.Items.map(
+              (companion: CompanionItemResponseInterface) =>
+                this.managePeopleSrv.modifyCompanion(companion)
             );
 
             if (res) {
-              this.toastService.showSuccess('Groups Loaded Success');
+              this.toastService.showCompanionsSuccess(
+                'Active Conversations Loaded Success'
+              );
             }
 
-            if (isLoadManual) {
-              this.timerSrv.startTimer();
-            }
-
-            return [loadGroupsSuccessAction({ groups })];
+            return [loadCompanionsSuccessAction({ companions })];
           }),
           catchError((err: HttpErrorResponse) => {
             const errorType =
@@ -42,9 +41,9 @@ export class LoadGroupsEffects {
             const errorMessage =
               err.error && err.error.message ? err.error.message : err.message;
 
-            this.toastService.showError(errorMessage);
+            this.toastService.showCompanionsError(errorMessage);
 
-            return of(groupsErrorAction({ errorType, errorMessage }));
+            return of(peopleErrorAction({ errorType, errorMessage }));
           })
         )
       )
@@ -54,7 +53,7 @@ export class LoadGroupsEffects {
   constructor(
     private actions$: Actions,
     private toastService: ToastService,
-    private manageGroupsSrv: ManageGroupsService,
+    private managePeopleSrv: ManagePeopleService,
     private timerSrv: TimerService
   ) {}
 }

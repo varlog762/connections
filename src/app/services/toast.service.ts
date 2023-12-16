@@ -20,4 +20,40 @@ export class ToastService {
       panelClass: ['error-toast'],
     });
   }
+
+  showPersonSuccess(message: string): void {
+    setTimeout(() => {
+      this.snackBar.open(message, 'Close', {
+        duration: 1500,
+        panelClass: ['success-toasts'],
+      });
+    }, 1600);
+  }
+
+  showPersonError(message: string): void {
+    setTimeout(() => {
+      this.snackBar.open(message, 'Close', {
+        duration: 2000,
+        panelClass: ['error-toast'],
+      });
+    }, 1600);
+  }
+
+  showCompanionsSuccess(message: string): void {
+    setTimeout(() => {
+      this.snackBar.open(message, 'Close', {
+        duration: 1500,
+        panelClass: ['success-toasts'],
+      });
+    }, 3200);
+  }
+
+  showCompanionsError(message: string): void {
+    setTimeout(() => {
+      this.snackBar.open(message, 'Close', {
+        duration: 2000,
+        panelClass: ['error-toast'],
+      });
+    }, 3200);
+  }
 }

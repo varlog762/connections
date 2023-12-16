@@ -3,38 +3,42 @@ import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 import { ToastService } from '../../services/toast.service';
-import {
-  groupsErrorAction,
-  loadGroupsAction,
-  loadGroupsSuccessAction,
-} from '../actions/groups.actions';
-import { ManageGroupsService } from '../../services/manage-groups.service';
-import { GroupResponseInterface } from '../../models/group-response.interface';
 import { TimerService } from '../../services/timer.service';
+import {
+  loadCompanionsAction,
+  loadPeopleAction,
+  loadPeopleSuccessAction,
+  peopleErrorAction,
+} from '../actions/people.actions';
+import { ManagePeopleService } from '../../services/manage-people.service';
+import { PersonItemResponseInterface } from '../../models/person-item-response.interface';
 
 @Injectable()
-export class LoadGroupsEffects {
+export class LoadPeopleEffects {
   reg$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadGroupsAction),
+      ofType(loadPeopleAction),
       switchMap(({ isLoadManual }) =>
-        this.manageGroupsSrv.loadGroups().pipe(
+        this.managePeopleSrv.loadPeople().pipe(
           mergeMap(res => {
-            const groups = res.Items.map((group: GroupResponseInterface) =>
-              this.manageGroupsSrv.modifyGroup(group)
+            const people = res.Items.map(
+              (person: PersonItemResponseInterface) =>
+                this.managePeopleSrv.modifyPerson(person)
             );
 
             if (res) {
-              this.toastService.showSuccess('Groups Loaded Success');
+              this.toastService.showPersonSuccess('People Loaded Success');
             }
 
             if (isLoadManual) {
+              this.store.dispatch(loadCompanionsAction());
               this.timerSrv.startTimer();
             }
 
-            return [loadGroupsSuccessAction({ groups })];
+            return [loadPeopleSuccessAction({ people })];
           }),
           catchError((err: HttpErrorResponse) => {
             const errorType =
@@ -42,9 +46,9 @@ export class LoadGroupsEffects {
             const errorMessage =
               err.error && err.error.message ? err.error.message : err.message;
 
-            this.toastService.showError(errorMessage);
+            this.toastService.showPersonError(errorMessage);
 
-            return of(groupsErrorAction({ errorType, errorMessage }));
+            return of(peopleErrorAction({ errorType, errorMessage }));
           })
         )
       )
@@ -54,7 +58,8 @@ export class LoadGroupsEffects {
   constructor(
     private actions$: Actions,
     private toastService: ToastService,
-    private manageGroupsSrv: ManageGroupsService,
-    private timerSrv: TimerService
+    private managePeopleSrv: ManagePeopleService,
+    private timerSrv: TimerService,
+    private store: Store
   ) {}
 }

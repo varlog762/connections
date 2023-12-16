@@ -1,4 +1,4 @@
-export interface CompanionItemResponse {
+export interface CompanionItemResponseInterface {
   id: {
     S: 'string'; // conversation id
   };

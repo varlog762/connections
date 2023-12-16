@@ -75,4 +75,8 @@ export class GroupItemComponent {
     this.store.dispatch(deleteGroupAction({ groupID: this.groupItem.id }));
     this.store.dispatch(groupsSubmitBtnDisableAction());
   }
+
+  ngOnDestroy(): void {
+    this.groupFeatureSubscription$.unsubscribe();
+  }
 }

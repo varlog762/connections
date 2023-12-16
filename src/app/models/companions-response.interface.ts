@@ -1,6 +1,6 @@
-import { CompanionItemResponse } from './companion-item-response.interface';
+import { CompanionItemResponseInterface } from './companion-item-response.interface';
 
-export interface CompanionsResponse {
+export interface CompanionsResponseInterface {
   Count: 'number';
-  Items: CompanionItemResponse[];
+  Items: CompanionItemResponseInterface[];
 }

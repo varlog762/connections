@@ -1,4 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { ModifiedPersonInterface } from '../../models/modified-person.interface';
+import { ModifiedCompanionInterface } from '../../models/modified-companion.interface';
 
 export const loadPeopleAction = createAction(
   '[People Component] Load People List',
@@ -6,8 +8,7 @@ export const loadPeopleAction = createAction(
 );
 
 export const loadCompanionsAction = createAction(
-  '[People Component] Load Companion List',
-  props<{ isLoadManual: boolean }>()
+  '[People Component] Load Companion List'
 );
 
 export const peopleErrorAction = createAction(
@@ -16,13 +17,13 @@ export const peopleErrorAction = createAction(
 );
 
 export const loadPeopleSuccessAction = createAction(
-  '[] People List Loading Succsess'
-  // props<{ groups: ModifiedGroupInterface[] }>()
+  '[] People List Loading Succsess',
+  props<{ people: ModifiedPersonInterface[] }>()
 );
 
 export const loadCompanionsSuccessAction = createAction(
-  '[] Companions List Loading Succsess'
-  // props<{ groups: ModifiedGroupInterface[] }>()
+  '[] Companions List Loading Succsess',
+  props<{ companions: ModifiedCompanionInterface[] }>()
 );
 
 export const peopleRefreshBtnDisableAction = createAction(
@@ -34,6 +35,10 @@ export const groupsRefreshBtnEnableAction = createAction(
 );
 
 export const peopleStateClearAction = createAction('[] Clear Groups State');
+
+export const attemptToLoadCompanionsAction = createAction(
+  '[] Attempt To Load Companions'
+);
 
 export const startTimer = createAction('[People Component] Start Timer');
 

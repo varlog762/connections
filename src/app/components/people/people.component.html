@@ -17,7 +17,8 @@
   </div>
   <h1 class="people-title">People:</h1>
   <div class="people-container">
-
+    <app-person-item *ngFor="let personItem of peopleList; trackBy: getGroupID" [personItem]="personItem">
+    </app-person-item>
   </div>
 </div>
 

@@ -28,6 +28,8 @@ import { LoadGroupsEffects } from './redux/effects/load-groups.effects';
 import { CreateNewGroupEffects } from './redux/effects/create-new-group.effects';
 import { DeleteGroupEffects } from './redux/effects/delete-group.effects';
 import { peopleReducer } from './redux/reducers/people.reducer';
+import { LoadPeopleEffects } from './redux/effects/load-people.effects';
+import { LoadCompanionsEffects } from './redux/effects/load-companions.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,7 +46,9 @@ export const appConfig: ApplicationConfig = {
       LogoutSuccessEffects,
       LoadGroupsEffects,
       CreateNewGroupEffects,
-      DeleteGroupEffects
+      DeleteGroupEffects,
+      LoadPeopleEffects,
+      LoadCompanionsEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {

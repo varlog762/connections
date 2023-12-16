@@ -76,17 +76,9 @@ export class GroupsComponent implements OnInit {
 
     this.isGroupsRefreshing$ = this.store.select(selectIsGroupRefreshing);
 
-    this.groupListSubscription$ = this.store
-      .select(selectGroupList)
-      .subscribe(list => {
-        if (!list?.length) {
-          this.store.dispatch(loadGroupsAction({ isLoadManual: false }));
-        }
-
-        this.groupList = list;
-      });
-
     this.initializeForm();
+
+    this.checkListOfGrops();
   }
 
   initializeForm(): void {
@@ -96,6 +88,18 @@ export class GroupsComponent implements OnInit {
         [Validators.required, Validators.maxLength(30), groupNameValidator()],
       ],
     });
+  }
+
+  checkListOfGrops(): void {
+    this.groupListSubscription$ = this.store
+      .select(selectGroupList)
+      .subscribe(list => {
+        if (!list?.length) {
+          this.store.dispatch(loadGroupsAction({ isLoadManual: false }));
+        }
+
+        this.groupList = list;
+      });
   }
 
   closePopupOnClick(event: Event) {

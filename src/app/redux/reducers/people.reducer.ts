@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import { PeopleStateInerface } from '../../models/people-state.inerface';
 import {
+  attemptToLoadCompanionsAction,
   decrementPeopleTimerValueAction,
   loadCompanionsSuccessAction,
   loadPeopleSuccessAction,
@@ -13,7 +14,10 @@ import {
 export const initialSate: PeopleStateInerface = {
   isRefreshPeopleInProgress: false,
   peopleList: [],
+  wasAttemptToLoadCompanions: false,
   companionsList: [],
+  errors: null,
+  peopleTimerValue: null,
 };
 
 export const peopleReducer = createReducer(
@@ -29,20 +33,19 @@ export const peopleReducer = createReducer(
       },
     };
   }),
-  // on(loadPeopleSuccessAction, (state, { groups }) => {
-  //   return {
-  //     ...state,
-  //     isNewGroupSubmitInProgress: false,
-  //     groupList: groups,
-  //   };
-  // }),
-  // on(loadCompanionsSuccessAction, (state, { groups }) => {
-  //   return {
-  //     ...state,
-  //     isNewGroupSubmitInProgress: false,
-  //     groupList: groups,
-  //   };
-  // }),
+  on(loadPeopleSuccessAction, (state, { people }) => {
+    return {
+      ...state,
+      peopleList: people,
+    };
+  }),
+  on(loadCompanionsSuccessAction, (state, { companions }) => {
+    return {
+      ...state,
+      companionsList: companions,
+      wasAttemptToLoadCompanions: true,
+    };
+  }),
   on(peopleRefreshBtnDisableAction, state => {
     return {
       ...state,
@@ -56,6 +59,12 @@ export const peopleReducer = createReducer(
     return {
       ...state,
       peopleTimerValue: value,
+    };
+  }),
+  on(attemptToLoadCompanionsAction, state => {
+    return {
+      ...state,
+      wasAttemptToLoadCompanions: true,
     };
   })
 );
