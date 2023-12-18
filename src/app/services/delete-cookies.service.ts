@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class DeleteCookiesService {
   constructor() {}
-  // Function to get all cookies as an object
+
   getAllCookies() {
     const cookies = document.cookie.split(';');
     const cookieObj = {};

@@ -23,8 +23,6 @@ export class LoadConversationHistoryEffects {
           .loadConversationHistory(payload.conversationID, payload.since)
           .pipe(
             mergeMap(res => {
-              console.log(payload.since);
-              console.log(res.Items);
               const hystory = res.Items.map(message =>
                 this.conversationsSrv.modifyMessage(message)
               );

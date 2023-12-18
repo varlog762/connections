@@ -2,25 +2,29 @@ import { createReducer, on } from '@ngrx/store';
 
 import { ConversationsStateInterface } from '../../models/conversations-state.interface';
 import {
-  attemptToLoadConversationHistoryAction,
   attemptToLoadConversationsAction,
+  convSubmitBtnDesableAction,
   conversationRefreshBtnDisableAction,
   conversationRefreshBtnEnableAction,
   conversationsErrorAction,
   conversationsStateClearAction,
   decrementConvTimerValueAction,
+  deleteConversationSuccessAction,
+  hidePopupAction,
   loadConversationsSuccessAction,
   loadHistorySuccessAction,
+  showPopupAction,
 } from '../actions/conversations.actions';
 
 export const initialSate: ConversationsStateInterface = {
   isRefreshMessagesInProgress: false,
   wasAttemptToLoadConversations: false,
-  wasAttemptToLoadConversationHistory: [],
   conversationsList: [],
   conversationsHistory: [],
   errors: null,
   conversationTimerValue: null,
+  isShowPopup: false,
+  isSubmitInProgress: false,
 };
 
 export const conversationsReducer = createReducer(
@@ -101,19 +105,32 @@ export const conversationsReducer = createReducer(
       isRefreshMessagesInProgress: true,
     };
   }),
-  on(attemptToLoadConversationHistoryAction, (state, { conversationID }) => {
-    if (!state.wasAttemptToLoadConversationHistory.includes(conversationID)) {
-      return {
-        ...state,
-        wasAttemptToLoadConversationHistory: [
-          ...state.wasAttemptToLoadConversationHistory,
-          conversationID,
-        ],
-      };
-    }
-
+  on(convSubmitBtnDesableAction, state => {
     return {
       ...state,
+      isSubmitInProgress: true,
+    };
+  }),
+  on(showPopupAction, state => {
+    return {
+      ...state,
+      isShowPopup: true,
+    };
+  }),
+  on(hidePopupAction, state => {
+    return {
+      ...state,
+      isShowPopup: false,
+    };
+  }),
+  on(deleteConversationSuccessAction, (state, { conversationID }) => {
+    return {
+      ...state,
+      conversationsList: state.conversationsList.filter(
+        item => item.id !== conversationID
+      ),
+      isShowPopup: false,
+      isSubmitInProgress: false,
     };
   })
 );

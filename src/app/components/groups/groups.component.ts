@@ -78,7 +78,7 @@ export class GroupsComponent implements OnInit {
 
     this.initializeForm();
 
-    this.checkListOfGrops();
+    this.checkListOfGroups();
   }
 
   initializeForm(): void {
@@ -90,7 +90,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  checkListOfGrops(): void {
+  checkListOfGroups(): void {
     this.groupListSubscription$ = this.store
       .select(selectGroupList)
       .subscribe(list => {

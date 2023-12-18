@@ -5,9 +5,10 @@ import { ResponseErrorInterface } from './response-error.interface';
 export interface ConversationsStateInterface {
   isRefreshMessagesInProgress: boolean;
   wasAttemptToLoadConversations: boolean;
-  wasAttemptToLoadConversationHistory: string[];
   conversationsList: ConversationInterface[];
   conversationsHistory: ConversationHistoryInterface[];
   errors: ResponseErrorInterface | null;
   conversationTimerValue: number | null;
+  isShowPopup: boolean;
+  isSubmitInProgress: boolean;
 }

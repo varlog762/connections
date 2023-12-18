@@ -12,8 +12,4 @@ import { MessageInterface } from '../../models/message.interface';
 })
 export class MessageComponent {
   @Input() message!: MessageInterface;
-
-  ngOnInit(): void {
-    // console.log(this.message);
-  }
 }

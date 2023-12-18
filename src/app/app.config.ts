@@ -34,6 +34,7 @@ import { conversationsReducer } from './redux/reducers/conversations.reducer';
 import { SendConversationMessageEffects } from './redux/effects/send-conversation-message.effects';
 import { LoadConversationsEffects } from './redux/effects/load-conversations.effects';
 import { LoadConversationHistoryEffects } from './redux/effects/load-conversation-history.effects';
+import { DeleteConversationEffects } from './redux/effects/delete-conversation.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -55,7 +56,8 @@ export const appConfig: ApplicationConfig = {
       CreateConversationEffects,
       SendConversationMessageEffects,
       LoadConversationsEffects,
-      LoadConversationHistoryEffects
+      LoadConversationHistoryEffects,
+      DeleteConversationEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {

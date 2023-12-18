@@ -73,11 +73,6 @@ export const attemptToLoadConversationsAction = createAction(
   '[LoadConversationsEffects] Attempt To Load Conversations'
 );
 
-export const attemptToLoadConversationHistoryAction = createAction(
-  '[LoadConversationHistoryEffects] Attempt To Load Conversation History Created',
-  props<{ conversationID: string }>()
-);
-
 export const conversationsErrorAction = createAction(
   '[Conversations] Conversation Error',
   props<{ errorType: string; errorMessage: string }>()
@@ -93,4 +88,26 @@ export const conversationRefreshBtnDisableAction = createAction(
 
 export const conversationRefreshBtnEnableAction = createAction(
   '[TimerService] Enable Refresh Conversation Button'
+);
+
+export const deleteConversationAction = createAction(
+  '[Conversation Component] Delete This Conversation',
+  props<{ conversationID: string }>()
+);
+
+export const deleteConversationSuccessAction = createAction(
+  '[Delete Conversation Effects] Conversation Deleted Success',
+  props<{ conversationID: string }>()
+);
+
+export const convSubmitBtnDesableAction = createAction(
+  '[Conversation Component] Desable Submit Button'
+);
+
+export const hidePopupAction = createAction(
+  '[Conversation Component] Hide Delete Conversation Popup'
+);
+
+export const showPopupAction = createAction(
+  '[Conversation Component] Show Delete Conversation Popup'
 );

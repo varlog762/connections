@@ -65,6 +65,17 @@ export class ConversationsService {
     );
   }
 
+  deleteConversation(conversationID: string): Observable<void> {
+    const deleteConversationParams = new HttpParams().set(
+      'conversationID',
+      conversationID
+    );
+
+    return this.http.delete<void>('/conversations/delete', {
+      params: deleteConversationParams,
+    });
+  }
+
   sendMessage(message: MessageRequestInterface): Observable<void> {
     return this.http.post<void>('/conversations/append', message);
   }

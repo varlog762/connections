@@ -15,11 +15,17 @@ import {
   selectConversationTimerValue,
   selectConversationsHistoryList,
   selectIsConvRefreshInProgress,
+  selectShowPopup,
+  selectSubmitingProgress,
 } from '../../redux/selectors/conversations.selectors';
 import {
+  convSubmitBtnDesableAction,
   conversationRefreshBtnDisableAction,
+  deleteConversationAction,
+  hidePopupAction,
   loadConversationHistoryAction,
   sendConversationMessageAction,
+  showPopupAction,
 } from '../../redux/actions/conversations.actions';
 import { UserNamespace } from '../../namespaces/user.namespace';
 
@@ -61,6 +67,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   public since: number | undefined;
 
+  public isShowPopup$!: Observable<boolean>;
+
+  public isSubmitInProgress$!: Observable<boolean>;
+
   constructor(
     private route: ActivatedRoute,
     private readonly store: Store,
@@ -89,6 +99,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
     );
 
     this.isRefreshing$ = this.store.select(selectIsConvRefreshInProgress);
+
+    this.isShowPopup$ = this.store.select(selectShowPopup);
+
+    this.isSubmitInProgress$ = this.store.select(selectSubmitingProgress);
   }
 
   ngAfterViewInit(): void {
@@ -166,6 +180,21 @@ export class ConversationComponent implements OnInit, OnDestroy {
       const container = this.messagesContainer.nativeElement;
       container.scrollTop = container.scrollHeight;
     }
+  }
+
+  deleteConversation(): void {
+    this.store.dispatch(
+      deleteConversationAction({ conversationID: this.conversationID })
+    );
+    this.store.dispatch(convSubmitBtnDesableAction());
+  }
+
+  hidePopup(): void {
+    this.store.dispatch(hidePopupAction());
+  }
+
+  showPopup(): void {
+    this.store.dispatch(showPopupAction());
   }
 
   getMessageID(index: number, message: MessageInterface): string {
