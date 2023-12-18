@@ -9,13 +9,15 @@ import {
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import {
-  selectAttemptToLoadConversationHistory,
+  selectConversationTimerValue,
   selectConversationsHistoryList,
+  selectIsConvRefreshInProgress,
 } from '../../redux/selectors/conversations.selectors';
 import {
+  conversationRefreshBtnDisableAction,
   loadConversationHistoryAction,
   sendConversationMessageAction,
 } from '../../redux/actions/conversations.actions';
@@ -51,7 +53,9 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   public messageForm!: FormGroup;
 
-  private attemptToLoadConversationHistorySubscr$!: Subscription;
+  public isRefreshing$!: Observable<boolean>;
+
+  public conversationTimerValue$!: Observable<number | null>;
 
   private conversationHistorySubscr$!: Subscription;
 
@@ -79,6 +83,12 @@ export class ConversationComponent implements OnInit, OnDestroy {
     if (this.since) {
       this.loadHistory(this.since);
     }
+
+    this.conversationTimerValue$ = this.store.select(
+      selectConversationTimerValue
+    );
+
+    this.isRefreshing$ = this.store.select(selectIsConvRefreshInProgress);
   }
 
   ngAfterViewInit(): void {
@@ -105,12 +115,13 @@ export class ConversationComponent implements OnInit, OnDestroy {
       });
   }
 
-  loadHistory(since: number | undefined): void {
+  loadHistory(since: number | undefined, isLoadManual: boolean = false): void {
     this.store.dispatch(
       loadConversationHistoryAction({
         payload: {
           conversationID: this.conversationID,
           since: since,
+          isLoadManual: isLoadManual,
         },
       })
     );
@@ -145,6 +156,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
     }
   }
 
+  refreshPeople() {
+    this.loadHistory(this.since, true);
+    this.store.dispatch(conversationRefreshBtnDisableAction());
+  }
+
   private scrollToBottom(): void {
     if (this.messagesContainer) {
       const container = this.messagesContainer.nativeElement;
@@ -157,7 +173,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.attemptToLoadConversationHistorySubscr$.unsubscribe();
     this.conversationHistorySubscr$.unsubscribe();
   }
 }

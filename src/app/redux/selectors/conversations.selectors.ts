@@ -4,11 +4,6 @@ import { ConversationsStateInterface } from '../../models/conversations-state.in
 export const selectConversationsFeature =
   createFeatureSelector<ConversationsStateInterface>('conversationsState');
 
-export const selectAttemptToLoadConversationHistory = createSelector(
-  selectConversationsFeature,
-  state => state.wasAttemptToLoadConversationHistory
-);
-
 export const selectAttemptToLoadConversations = createSelector(
   selectConversationsFeature,
   state => state.wasAttemptToLoadConversations
@@ -22,4 +17,14 @@ export const selectConversationsList = createSelector(
 export const selectConversationsHistoryList = createSelector(
   selectConversationsFeature,
   state => state.conversationsHistory
+);
+
+export const selectConversationTimerValue = createSelector(
+  selectConversationsFeature,
+  state => state.conversationTimerValue
+);
+
+export const selectIsConvRefreshInProgress = createSelector(
+  selectConversationsFeature,
+  state => state.isRefreshMessagesInProgress
 );

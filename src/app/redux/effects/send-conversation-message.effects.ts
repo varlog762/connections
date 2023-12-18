@@ -31,6 +31,7 @@ export class SendConversationMessageEffects {
                   payload: {
                     conversationID: payload.conversationID,
                     since: payload.since,
+                    isLoadManual: false,
                   },
                 }),
               ];

@@ -4,6 +4,8 @@ import { ConversationsStateInterface } from '../../models/conversations-state.in
 import {
   attemptToLoadConversationHistoryAction,
   attemptToLoadConversationsAction,
+  conversationRefreshBtnDisableAction,
+  conversationRefreshBtnEnableAction,
   conversationsErrorAction,
   conversationsStateClearAction,
   decrementConvTimerValueAction,
@@ -85,6 +87,18 @@ export const conversationsReducer = createReducer(
     return {
       ...state,
       wasAttemptToLoadConversations: true,
+    };
+  }),
+  on(conversationRefreshBtnEnableAction, state => {
+    return {
+      ...state,
+      isRefreshMessagesInProgress: false,
+    };
+  }),
+  on(conversationRefreshBtnDisableAction, state => {
+    return {
+      ...state,
+      isRefreshMessagesInProgress: true,
     };
   }),
   on(attemptToLoadConversationHistoryAction, (state, { conversationID }) => {

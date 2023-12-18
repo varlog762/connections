@@ -1,12 +1,14 @@
 <div class="wrapper">
   <div class="container">
     <div class="conversation-buttons-container">
-      <button type="button" class="green-button shadow-button conversation-button refresh-button">Refresh
+      <button type="button" class="green-button shadow-button conversation-button refresh-button"
+        [disabled]="isRefreshing$ | async" (click)="refreshPeople()">Refresh
         Messages</button>
       <button type="button" class="green-button shadow-button conversation-button delete-conversation-button">Delete
         Conversation</button>
       <a rel="stylesheet" routerLink="/" class="go-home-link">To main page</a>
-      <div class="timer-value">60</div>
+      <div class="timer-value" *ngIf="conversationTimerValue$ | async as conversationTimerValue">
+        {{ conversationTimerValue }}</div>
     </div>
     <h1 class="conversation-title">Name Of Companion</h1>
     <div class="messages-container" #messagesContainer>

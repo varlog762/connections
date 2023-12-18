@@ -7,11 +7,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../../services/toast.service';
 import { ConversationsService } from '../../services/conversations.service';
 import {
-  attemptToLoadConversationHistoryAction,
   conversationsErrorAction,
   loadConversationHistoryAction,
   loadHistorySuccessAction,
 } from '../actions/conversations.actions';
+import { TimerService } from '../../services/timer.service';
 
 @Injectable()
 export class LoadConversationHistoryEffects {
@@ -29,11 +29,9 @@ export class LoadConversationHistoryEffects {
                 this.conversationsSrv.modifyMessage(message)
               );
 
-              // if (res) {
-              //   this.toastService.showConversationsSuccess(
-              //     'Active Conversations Loaded Success'
-              //   );
-              // }
+              if (payload.isLoadManual) {
+                this.timerSrv.startConversationTimer();
+              }
 
               return [
                 loadHistorySuccessAction({
@@ -64,6 +62,7 @@ export class LoadConversationHistoryEffects {
   constructor(
     private actions$: Actions,
     private toastService: ToastService,
-    private conversationsSrv: ConversationsService
+    private conversationsSrv: ConversationsService,
+    private timerSrv: TimerService
   ) {}
 }

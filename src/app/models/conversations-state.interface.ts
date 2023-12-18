@@ -1,4 +1,3 @@
-import { AttemptToLoadHistoryItemInterface } from './attempt-to-load-history-item.interface';
 import { ConversationHistoryInterface } from './conversation-history.interface';
 import { ConversationInterface } from './conversation.interface';
 import { ResponseErrorInterface } from './response-error.interface';

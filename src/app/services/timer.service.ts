@@ -9,6 +9,10 @@ import {
   decrementPeopleTimerValueAction,
   peopleRefreshBtnEnableAction,
 } from '../redux/actions/people.actions';
+import {
+  conversationRefreshBtnEnableAction,
+  decrementConvTimerValueAction,
+} from '../redux/actions/conversations.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +20,7 @@ import {
 export class TimerService {
   private groupstimerValue = 60;
   private peopleTimerValue = 60;
+  private conversationTimerValue = 60;
 
   constructor(private store: Store) {}
 
@@ -49,6 +54,23 @@ export class TimerService {
         this.peopleTimerValue = 60;
       } else {
         this.peopleTimerValue -= 1;
+      }
+    }, 1000);
+  }
+
+  startConversationTimer() {
+    const timer = setInterval(() => {
+      this.store.dispatch(
+        decrementConvTimerValueAction({ value: this.conversationTimerValue })
+      );
+
+      if (!this.conversationTimerValue) {
+        clearInterval(timer);
+        this.store.dispatch(decrementConvTimerValueAction({ value: null }));
+        this.store.dispatch(conversationRefreshBtnEnableAction());
+        this.conversationTimerValue = 60;
+      } else {
+        this.conversationTimerValue -= 1;
       }
     }, 1000);
   }

@@ -8,7 +8,13 @@ export const loadConversationsAction = createAction(
 
 export const loadConversationHistoryAction = createAction(
   '[Conversation Component] Load Messages History',
-  props<{ payload: { conversationID: string; since: number | undefined } }>()
+  props<{
+    payload: {
+      conversationID: string;
+      since: number | undefined;
+      isLoadManual: boolean;
+    };
+  }>()
 );
 
 export const loadHistorySuccessAction = createAction(
@@ -79,4 +85,12 @@ export const conversationsErrorAction = createAction(
 
 export const conversationsStateClearAction = createAction(
   '[Logout] Clear Conversations State'
+);
+
+export const conversationRefreshBtnDisableAction = createAction(
+  '[ConversationComponent] Disable Refresh Conversation Button'
+);
+
+export const conversationRefreshBtnEnableAction = createAction(
+  '[TimerService] Enable Refresh Conversation Button'
 );
