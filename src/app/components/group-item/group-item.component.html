@@ -2,7 +2,7 @@
   <div class="group-name"><span>Group name: </span>{{ groupItem.name }}</div>
   <div class="group-date"><span>Created: </span>{{ groupItem.createdAt | date: 'medium' }}</div>
   <div class="group-owner"><span>Group id: </span>{{ groupItem.id }}</div>
-  <button type="button" class="group-delete-button" *ngIf="isGroupOwner(groupItem.createdBy)"
+  <button type="button" id="delGroupBtn" class="group-delete-button" *ngIf="isGroupOwner(groupItem.createdBy)"
     (click)="dispatchShowPopupAction()"></button>
 </div>
 

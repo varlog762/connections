@@ -10,6 +10,9 @@ import {
 import { ToastService } from '../../services/toast.service';
 import { userProfileStateClearAction } from '../actions/user-profile.actions';
 import { DeleteCookiesService } from '../../services/delete-cookies.service';
+import { groupsStateClearAction } from '../actions/groups.actions';
+import { peopleStateClearAction } from '../actions/people.actions';
+import { conversationsStateClearAction } from '../actions/conversations.actions';
 
 @Injectable()
 export class LogoutSuccessEffects {
@@ -20,12 +23,16 @@ export class LogoutSuccessEffects {
         localStorage.clear();
         sessionStorage.clear();
 
-        // this.delCookiesSrv.getAllCookies();
-
         this.toastService.showSuccess('Logout Success');
         this.router.navigate(['/signin']);
 
-        return [authStateClearAction(), userProfileStateClearAction()];
+        return [
+          authStateClearAction(),
+          userProfileStateClearAction(),
+          groupsStateClearAction(),
+          peopleStateClearAction(),
+          conversationsStateClearAction(),
+        ];
       })
     )
   );

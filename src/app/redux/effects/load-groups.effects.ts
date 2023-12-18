@@ -31,7 +31,7 @@ export class LoadGroupsEffects {
             }
 
             if (isLoadManual) {
-              this.timerSrv.startTimer();
+              this.timerSrv.startGroupsTimer();
             }
 
             return [loadGroupsSuccessAction({ groups })];

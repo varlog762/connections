@@ -1,19 +1,8 @@
-<!-- <div class="container">
+<div class="container">
   <div class="people-buttons-container">
     <button type="button" class="green-button shadow-button people-button refresh-button"
       [disabled]="isPeopleRefreshing$ | async" (click)="refreshPeople()">Refresh People List</button>
-    <div class="timer-value" *ngIf="peopleTimerValue$ | async as peopleTimerValue">{{ peopleTimerValue }}</div>
-  </div>
-  <h1 class="people-title">People:</h1>
-  <div class="people-container" *ngIf="peopleList">
-    
-  </div>
-</div> -->
-
-<div class="container">
-  <div class="people-buttons-container">
-    <button type="button" class="green-button shadow-button people-button refresh-button">Refresh People List</button>
-    <div class=" timer-value">60</div>
+    <div class=" timer-value" *ngIf="peopleTimerValue$ | async as peopleTimerValue">{{ peopleTimerValue }}</div>
   </div>
   <h1 class="people-title">People:</h1>
   <div class="people-container">

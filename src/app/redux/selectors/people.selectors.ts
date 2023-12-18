@@ -10,11 +10,6 @@ export const selectPeopleList = createSelector(
   state => state.peopleList
 );
 
-export const selectCompanionsList = createSelector(
-  selectPeopleFeature,
-  state => state.companionsList
-);
-
 export const selectIsPeopleRefreshing = createSelector(
   selectPeopleFeature,
   state => state.isRefreshPeopleInProgress
@@ -23,9 +18,4 @@ export const selectIsPeopleRefreshing = createSelector(
 export const selectPeopleTimerValue = createSelector(
   selectPeopleFeature,
   state => state.peopleTimerValue
-);
-
-export const selectAttemptToLoadCompanions = createSelector(
-  selectPeopleFeature,
-  state => state.wasAttemptToLoadCompanions
 );

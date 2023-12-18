@@ -1,1 +1,70 @@
-<p>conversation works!</p>
+<div class="wrapper">
+  <div class="container">
+    <div class="conversation-buttons-container">
+      <button type="button" class="green-button shadow-button conversation-button refresh-button">Refresh
+        Messages</button>
+      <button type="button" class="green-button shadow-button conversation-button delete-conversation-button">Delete
+        Conversation</button>
+      <a rel="stylesheet" routerLink="/" class="go-home-link">To main page</a>
+      <div class="timer-value">60</div>
+    </div>
+    <h1 class="conversation-title">Name Of Companion</h1>
+    <div class="messages-container" #messagesContainer>
+      <app-message class="my-message" *ngFor="let message of messages| sortMessagesByDatePipe; trackBy: getMessageID"
+        [message]="message">
+      </app-message>
+    </div>
+    <div class="form-container">
+      <form [formGroup]="messageForm" class="form" (submit)="onSubmit($event)">
+        <input formControlName="message" id="message" name="message" type="text" class="form-input message-input"
+          placeholder="Enter Your Message Here:">
+        <button type="submit" class="green-button conversation-submit-button"
+          [disabled]="!this.messageForm.get('message')?.value">></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="popup-container" id="popupContainer" *ngIf="isShowPopup$ | async">
+  <div class="popup">
+    <h2 class="delete-group-popup-title">Do you really want to delete the group?</h2>
+    <div class="popup-buttons-container">
+      <button type="submit" class="green-button shadow-button save-new-group form-btn popup-btn form-btn"
+        [disabled]="isSubmitInProgress$ | async" (click)="deleteGroup()">Delete</button>
+      <button type="button" id="popupCancel" class="green-button shadow-button cancel-new-group form-btn popup-btn"
+        [disabled]="isSubmitInProgress$ | async" (click)="dispathHidePopupAction()">Cancel</button>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+  <div class="conversation-buttons-container">
+    <button type="button" class="green-button shadow-button groups-button refresh-button"
+      [disabled]="isGroupsRefreshing$ | async" (click)="refreshGroups()">Refresh Group List</button>
+    <button type="button" class="green-button shadow-button groups-button create-group-button"
+      (click)="showForm()">Create New
+      Group</button>
+    <div class="timer-value" *ngIf="groupsTimerValue$ | async as groupsTimerValue">{{ groupsTimerValue }}</div>
+  </div>
+  <h1 class="groups-title">Groups:</h1>
+  <div class="groups-container" *ngIf="groupList"></div>
+</div> -->

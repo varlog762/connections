@@ -33,6 +33,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'conversation/:conversationID',
+    loadComponent: () =>
+      import('./components/conversation/conversation.component').then(
+        m => m.ConversationComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     component: NotFoundComponent,
     pathMatch: 'full',

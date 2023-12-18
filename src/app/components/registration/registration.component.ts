@@ -14,7 +14,6 @@ import { BackendErrorsEnum } from '../../enums/backend-errors.enum';
 import { passwordValidator } from '../../validators/password.validator';
 import { nameValidator } from '../../validators/name.validator';
 import {
-  doLogoutAction,
   registrationAction,
   submitBtnDisableAction,
 } from '../../redux/actions/auth.actions';

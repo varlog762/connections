@@ -4,17 +4,10 @@ import { Store } from '@ngrx/store';
 
 import { ModifiedGroupInterface } from '../../models/modified-group.interface';
 import { ManageGroupsService } from '../../services/manage-groups.service';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-  distinctUntilChanged,
-  map,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   selectGroupsFeature,
   selectIsGroupSubmiting,
-  selectIsShowPopup,
 } from '../../redux/selectors/groups.selectors';
 import {
   deleteGroupAction,

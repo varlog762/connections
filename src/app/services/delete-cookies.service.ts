@@ -19,7 +19,6 @@ export class DeleteCookiesService {
       // cookieObj[name]: = decodeURIComponent(value);
     }
 
-    console.log(cookies);
     return cookieObj;
   }
 

@@ -5,28 +5,50 @@ import {
   decrementGroupsTimerValueAction,
   groupsRefreshBtnEnableAction,
 } from '../redux/actions/groups.actions';
+import {
+  decrementPeopleTimerValueAction,
+  peopleRefreshBtnEnableAction,
+} from '../redux/actions/people.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimerService {
-  private timerValue = 60;
+  private groupstimerValue = 60;
+  private peopleTimerValue = 60;
 
   constructor(private store: Store) {}
 
-  startTimer() {
+  startGroupsTimer() {
     const timer = setInterval(() => {
       this.store.dispatch(
-        decrementGroupsTimerValueAction({ value: this.timerValue })
+        decrementGroupsTimerValueAction({ value: this.groupstimerValue })
       );
 
-      if (!this.timerValue) {
+      if (!this.groupstimerValue) {
         clearInterval(timer);
         this.store.dispatch(decrementGroupsTimerValueAction({ value: null }));
         this.store.dispatch(groupsRefreshBtnEnableAction());
-        this.timerValue = 60;
+        this.groupstimerValue = 60;
       } else {
-        this.timerValue -= 1;
+        this.groupstimerValue -= 1;
+      }
+    }, 1000);
+  }
+
+  startPeopleTimer() {
+    const timer = setInterval(() => {
+      this.store.dispatch(
+        decrementPeopleTimerValueAction({ value: this.peopleTimerValue })
+      );
+
+      if (!this.peopleTimerValue) {
+        clearInterval(timer);
+        this.store.dispatch(decrementPeopleTimerValueAction({ value: null }));
+        this.store.dispatch(peopleRefreshBtnEnableAction());
+        this.peopleTimerValue = 60;
+      } else {
+        this.peopleTimerValue -= 1;
       }
     }, 1000);
   }

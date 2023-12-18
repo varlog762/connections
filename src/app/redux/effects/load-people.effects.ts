@@ -8,13 +8,13 @@ import { Store } from '@ngrx/store';
 import { ToastService } from '../../services/toast.service';
 import { TimerService } from '../../services/timer.service';
 import {
-  loadCompanionsAction,
   loadPeopleAction,
   loadPeopleSuccessAction,
   peopleErrorAction,
 } from '../actions/people.actions';
 import { ManagePeopleService } from '../../services/manage-people.service';
 import { PersonItemResponseInterface } from '../../models/person-item-response.interface';
+import { loadConversationsAction } from '../actions/conversations.actions';
 
 @Injectable()
 export class LoadPeopleEffects {
@@ -34,8 +34,8 @@ export class LoadPeopleEffects {
             }
 
             if (isLoadManual) {
-              this.store.dispatch(loadCompanionsAction());
-              this.timerSrv.startTimer();
+              this.store.dispatch(loadConversationsAction());
+              this.timerSrv.startPeopleTimer();
             }
 
             return [loadPeopleSuccessAction({ people })];

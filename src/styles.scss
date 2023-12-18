@@ -42,7 +42,7 @@ main {
     cursor: pointer;
   }
 
-  &:active:not[disabled] {
+  &:active:not([disabled]) {
     background-color: $dark-green-color;
   }
 }

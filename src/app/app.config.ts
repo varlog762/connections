@@ -29,7 +29,11 @@ import { CreateNewGroupEffects } from './redux/effects/create-new-group.effects'
 import { DeleteGroupEffects } from './redux/effects/delete-group.effects';
 import { peopleReducer } from './redux/reducers/people.reducer';
 import { LoadPeopleEffects } from './redux/effects/load-people.effects';
-import { LoadCompanionsEffects } from './redux/effects/load-companions.effects';
+import { CreateConversationEffects } from './redux/effects/create-conversation.effects';
+import { conversationsReducer } from './redux/reducers/conversations.reducer';
+import { SendConversationMessageEffects } from './redux/effects/send-conversation-message.effects';
+import { LoadConversationsEffects } from './redux/effects/load-conversations.effects';
+import { LoadConversationHistoryEffects } from './redux/effects/load-conversation-history.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -48,7 +52,10 @@ export const appConfig: ApplicationConfig = {
       CreateNewGroupEffects,
       DeleteGroupEffects,
       LoadPeopleEffects,
-      LoadCompanionsEffects
+      CreateConversationEffects,
+      SendConversationMessageEffects,
+      LoadConversationsEffects,
+      LoadConversationHistoryEffects
     ),
     provideHttpClient(withInterceptorsFromDi()),
     {
@@ -66,6 +73,7 @@ export const appConfig: ApplicationConfig = {
       userProfileState: userProfileReducer,
       groupsState: groupsReducer,
       peopleState: peopleReducer,
+      conversationsState: conversationsReducer,
     }),
     provideStoreDevtools({
       maxAge: 25,

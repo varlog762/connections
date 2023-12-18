@@ -5,35 +5,36 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastService } from '../../services/toast.service';
-import { TimerService } from '../../services/timer.service';
-import {
-  loadCompanionsSuccessAction,
-  loadPeopleAction,
-  peopleErrorAction,
-} from '../actions/people.actions';
+import { loadPeopleAction, peopleErrorAction } from '../actions/people.actions';
 import { ManagePeopleService } from '../../services/manage-people.service';
-import { CompanionItemResponseInterface } from '../../models/companion-item-response.interface';
+import {
+  attemptToLoadConversationsAction,
+  loadConversationsSuccessAction,
+} from '../actions/conversations.actions';
+import { ConversationsService } from '../../services/conversations.service';
 
 @Injectable()
-export class LoadCompanionsEffects {
+export class LoadConversationsEffects {
   reg$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadPeopleAction),
-      switchMap(({ isLoadManual }) =>
-        this.managePeopleSrv.loadCompanions().pipe(
+      switchMap(() =>
+        this.conversationsSrv.loadConversations().pipe(
           mergeMap(res => {
-            const companions = res.Items.map(
-              (companion: CompanionItemResponseInterface) =>
-                this.managePeopleSrv.modifyCompanion(companion)
+            const conversations = res.Items.map(conversation =>
+              this.conversationsSrv.modifyConversation(conversation)
             );
 
             if (res) {
-              this.toastService.showCompanionsSuccess(
+              this.toastService.showConversationsSuccess(
                 'Active Conversations Loaded Success'
               );
             }
 
-            return [loadCompanionsSuccessAction({ companions })];
+            return [
+              loadConversationsSuccessAction({ conversations }),
+              attemptToLoadConversationsAction(),
+            ];
           }),
           catchError((err: HttpErrorResponse) => {
             const errorType =
@@ -41,7 +42,7 @@ export class LoadCompanionsEffects {
             const errorMessage =
               err.error && err.error.message ? err.error.message : err.message;
 
-            this.toastService.showCompanionsError(errorMessage);
+            this.toastService.showConversationsError(errorMessage);
 
             return of(peopleErrorAction({ errorType, errorMessage }));
           })
@@ -53,7 +54,6 @@ export class LoadCompanionsEffects {
   constructor(
     private actions$: Actions,
     private toastService: ToastService,
-    private managePeopleSrv: ManagePeopleService,
-    private timerSrv: TimerService
+    private conversationsSrv: ConversationsService
   ) {}
 }

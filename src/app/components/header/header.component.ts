@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -21,7 +21,10 @@ import { selectIsLogged } from '../../redux/selectors/auth.selectors';
 export class HeaderComponent {
   public isLogged$!: Observable<boolean | null>;
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLogged$ = this.store.select(selectIsLogged);
@@ -34,5 +37,9 @@ export class HeaderComponent {
   logout() {
     this.store.dispatch(doLogoutAction());
     this.store.dispatch(logoutBtnDisableAction());
+  }
+
+  ngOnDestroy(): void {
+    this.router.navigate(['/']);
   }
 }

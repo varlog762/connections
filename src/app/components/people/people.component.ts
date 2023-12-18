@@ -4,19 +4,21 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
 import {
-  loadCompanionsAction,
   loadPeopleAction,
+  peopleRefreshBtnDisableAction,
 } from '../../redux/actions/people.actions';
 
 import { ModifiedPersonInterface } from '../../models/modified-person.interface';
 import {
-  selectAttemptToLoadCompanions,
-  selectCompanionsList,
+  selectIsPeopleRefreshing,
   selectPeopleList,
+  selectPeopleTimerValue,
 } from '../../redux/selectors/people.selectors';
-import { ModifiedCompanionInterface } from '../../models/modified-companion.interface';
+import { ConversationInterface } from '../../models/conversation.interface';
 import { PersonItemComponent } from '../person-item/person-item.component';
 import { CurrentUserInterface } from '../../models/current-user.interface';
+import { loadConversationsAction } from '../../redux/actions/conversations.actions';
+import { selectAttemptToLoadConversations } from '../../redux/selectors/conversations.selectors';
 
 @Component({
   selector: 'app-people',
@@ -28,20 +30,26 @@ import { CurrentUserInterface } from '../../models/current-user.interface';
 export class PeopleComponent implements OnInit, OnDestroy {
   public peopleList!: ModifiedPersonInterface[];
 
-  public companionsList!: ModifiedCompanionInterface[];
+  public conversationsList!: ConversationInterface[];
 
   private peopleListSubscription$!: Subscription;
 
-  // private companionsListSubscription$!: Subscription;
+  public isPeopleRefreshing$!: Observable<boolean>;
 
-  private wasAttemptToLoadCompanionsSubscr$!: Subscription;
+  public peopleTimerValue$!: Observable<number | null>;
+
+  private wasAttemptToLoadConversationsSubscr$!: Subscription;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
+    this.isPeopleRefreshing$ = this.store.select(selectIsPeopleRefreshing);
+
+    this.peopleTimerValue$ = this.store.select(selectPeopleTimerValue);
+
     this.checkListOfPeople();
 
-    this.checkListOfCompanions();
+    this.checkListOfConversations();
   }
 
   checkListOfPeople(): void {
@@ -62,14 +70,19 @@ export class PeopleComponent implements OnInit, OnDestroy {
       });
   }
 
-  checkListOfCompanions(): void {
-    this.wasAttemptToLoadCompanionsSubscr$ = this.store
-      .select(selectAttemptToLoadCompanions)
+  checkListOfConversations(): void {
+    this.wasAttemptToLoadConversationsSubscr$ = this.store
+      .select(selectAttemptToLoadConversations)
       .subscribe(wasAttempt => {
         if (!wasAttempt) {
-          this.store.dispatch(loadCompanionsAction());
+          this.store.dispatch(loadConversationsAction());
         }
       });
+  }
+
+  refreshPeople() {
+    this.store.dispatch(loadPeopleAction({ isLoadManual: true }));
+    this.store.dispatch(peopleRefreshBtnDisableAction());
   }
 
   getGroupID(index: number, personItem: ModifiedPersonInterface): string {
@@ -78,6 +91,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.peopleListSubscription$.unsubscribe();
-    // this.wasAttemptToLoadCompanionsSubscr$.unsubscribe();
+    this.wasAttemptToLoadConversationsSubscr$.unsubscribe();
   }
 }

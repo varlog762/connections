@@ -74,7 +74,7 @@ export const deleteGroupSuccessAction = createAction(
   props<GroupDeletingRequestInterface>()
 );
 
-export const startTimer = createAction('[Groups Component] Start Timer');
+export const startTimerAction = createAction('[Groups Component] Start Timer');
 
 export const decrementGroupsTimerValueAction = createAction(
   '[TimerService] Decrement Groups Timer Value',

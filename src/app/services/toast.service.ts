@@ -39,7 +39,7 @@ export class ToastService {
     }, 1600);
   }
 
-  showCompanionsSuccess(message: string): void {
+  showConversationsSuccess(message: string): void {
     setTimeout(() => {
       this.snackBar.open(message, 'Close', {
         duration: 1500,
@@ -48,7 +48,7 @@ export class ToastService {
     }, 3200);
   }
 
-  showCompanionsError(message: string): void {
+  showConversationsError(message: string): void {
     setTimeout(() => {
       this.snackBar.open(message, 'Close', {
         duration: 2000,
