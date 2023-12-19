@@ -55,6 +55,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   public conversationID!: string;
 
+  public companionName: string | null = null;
+
   public messages!: MessageInterface[];
 
   public messageForm!: FormGroup;
@@ -126,7 +128,19 @@ export class ConversationComponent implements OnInit, OnDestroy {
         this.messages = conversation ? conversation[this.conversationID] : [];
 
         this.getSince();
+
+        this.getCompanionName(this.messages);
       });
+  }
+
+  getCompanionName(messages: MessageInterface[]): void {
+    const companionID = messages.find(
+      message => message.authorID !== this.currentUser['rs-uid']
+    );
+
+    this.companionName = UserNamespace.getCurrentCompanionName(
+      companionID?.authorID as string
+    );
   }
 
   loadHistory(since: number | undefined, isLoadManual: boolean = false): void {
@@ -175,7 +189,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.store.dispatch(conversationRefreshBtnDisableAction());
   }
 
-  private scrollToBottom(): void {
+  scrollToBottom(): void {
     if (this.messagesContainer) {
       const container = this.messagesContainer.nativeElement;
       container.scrollTop = container.scrollHeight;

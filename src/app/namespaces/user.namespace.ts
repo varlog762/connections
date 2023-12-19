@@ -4,4 +4,8 @@ export namespace UserNamespace {
   export const currentUser: CurrentUserInterface = JSON.parse(
     localStorage.getItem('currentUser') as string
   );
+
+  export function getCurrentCompanionName(id: string): string | null {
+    return localStorage.getItem(id) || null;
+  }
 }

@@ -1,5 +1,5 @@
-<div class="container my-message">
-  <div class="author">{{ message.authorID }}</div>
+<div class="container" [ngClass]="{'my-message': isMyMessage()}">
+  <div class="author">{{ currentCompanionName || 'My message' }}:</div>
   <div class="date">{{ message.createdAt | date: 'medium' }}</div>
   <div class="message">{{ message.message }}</div>
 </div>

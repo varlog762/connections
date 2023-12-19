@@ -1,13 +1,14 @@
 @import '../../../assets/styles/variables.scss';
 
 :host {
-  width: 45%;
+  width: 100%;
   display: block;
   margin-bottom: 5px;
   position: relative;
 }
 
 .container {
+  width: 45%;
   min-height: 80px;
   position: relative;
   background-color: $light-color;
@@ -21,7 +22,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   @include font-styles($fs: 14px, $fw: 700);
-  color: #000;
+  color: $dark-grey-color;
 }
 
 .date {
@@ -38,11 +39,13 @@
   min-height: 40px;
   margin-top: 15px;
   @include font-styles($fs: 16px);
-  color: $dark-grey-color;
+  color: #000;
   overflow: hidden;
 }
 
 .my-message {
+  position: relative;
+  left: 640px;
   border-radius: 15px 0 15px 15px;
   background-color: $light-green-color;
 }

@@ -10,6 +10,7 @@ import {
   logoutBtnDisableAction,
 } from '../../redux/actions/auth.actions';
 import { selectIsLogged } from '../../redux/selectors/auth.selectors';
+import { UserNamespace } from '../../namespaces/user.namespace';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,8 @@ import { selectIsLogged } from '../../redux/selectors/auth.selectors';
 })
 export class HeaderComponent {
   public isLogged$!: Observable<boolean | null>;
+
+  public currentUser = UserNamespace.currentUser['rs-email'];
 
   constructor(
     private store: Store,
