@@ -1,0 +1,1 @@
+import{Ob as t,Pb as s}from"./chunk-RVRWXEWA.js";var r=s("authState"),c=t(r,e=>e.isSubmitInProgress),l=t(r,e=>e.duplicatedEmails),a=t(r,e=>({errorType:e.errors?.type,duplicatedEmails:e.duplicatedEmails})),i=t(r,e=>e.isLogged);export{c as a,l as b,a as c,i as d};
