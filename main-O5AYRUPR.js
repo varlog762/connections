@@ -255,17 +255,15 @@ function Sl(o, t, n) {
           m = l ? n(d, t) : d;
         return c === !1
           ? m.pipe(Ir())
-          : m
-              .pipe(Mr())
-              .pipe(
-                et((_) => ({
-                  effect: o[a],
-                  notification: _,
-                  propertyName: a,
-                  sourceName: r,
-                  sourceInstance: o,
-                }))
-              );
+          : m.pipe(Mr()).pipe(
+              et((_) => ({
+                effect: o[a],
+                notification: _,
+                propertyName: a,
+                sourceName: r,
+                sourceInstance: o,
+              }))
+            );
       }
     );
   return $t(...s);
@@ -9983,7 +9981,8 @@ var bl = (() => {
     constructor(e, i) {
       (this.store = e),
         (this.router = i),
-        (this.currentUser = Bs.currentUser["rs-email"] || undefined);
+        // (this.currentUser = Bs.currentUser["rs-email"] || undefined);
+        (this.currentUser = "userName");
     }
     ngOnInit() {
       this.isLogged$ = this.store.select(ys);
