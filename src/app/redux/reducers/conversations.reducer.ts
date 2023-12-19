@@ -8,6 +8,8 @@ import {
   conversationRefreshBtnEnableAction,
   conversationsErrorAction,
   conversationsStateClearAction,
+  createConversationAction,
+  createConversationSuccessAction,
   decrementConvTimerValueAction,
   deleteConversationSuccessAction,
   hidePopupAction,
@@ -129,6 +131,14 @@ export const conversationsReducer = createReducer(
       conversationsList: state.conversationsList.filter(
         item => item.id !== conversationID
       ),
+      isShowPopup: false,
+      isSubmitInProgress: false,
+    };
+  }),
+  on(createConversationSuccessAction, (state, { payload }) => {
+    return {
+      ...state,
+      conversationsList: [...state.conversationsList, payload],
       isShowPopup: false,
       isSubmitInProgress: false,
     };

@@ -15,6 +15,7 @@ import {
   hidePopupAction,
   showPopupAction,
 } from '../../redux/actions/groups.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group-item',
@@ -38,7 +39,8 @@ export class GroupItemComponent {
 
   constructor(
     private manageGroupsSrv: ManageGroupsService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -71,5 +73,9 @@ export class GroupItemComponent {
 
   ngOnDestroy(): void {
     this.groupFeatureSubscription$.unsubscribe();
+  }
+
+  goToDialog(): void {
+    this.router.navigate(['group', this.groupItem.id]);
   }
 }

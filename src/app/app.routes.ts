@@ -41,6 +41,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'group/:groupID',
+    loadComponent: () =>
+      import('./components/group-dialog/group-dialog.component').then(
+        m => m.GroupDialogComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     component: NotFoundComponent,
     pathMatch: 'full',
